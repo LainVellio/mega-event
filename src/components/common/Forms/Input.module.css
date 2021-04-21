@@ -1,0 +1,70 @@
+.inputBlock {
+  width: 268px;
+  margin: 0 auto 16px auto;
+}
+
+.input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 0 10px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.input input {
+  flex-grow: 1;
+  display: block;
+  background-color: initial;
+  padding: 0;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: PT_Root_UI;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.inputModified {
+  align-self: flex-end;
+  margin-bottom: 6px;
+}
+
+.input::placeholder {
+  font-family: PT_Root_UI;
+  color: #676c7a;
+  font-style: medium;
+  font-size: 14px;
+}
+
+label {
+  align-self: flex-start;
+  position: absolute;
+  display: block;
+  padding-top: 4px;
+  font-family: PT_Root_UI;
+  color: #676c7a;
+  font-weight: bold;
+  font-size: 10px;
+}
+
+.selected {
+  border: 1px solid #ab81f1;
+  box-sizing: padding-box;
+}
+
+.selected label {
+  color: #ab81f1;
+}
+
+.error {
+  margin-top: 4px;
+  font-family: PT_Root_UI;
+  font-style: normal;
+  font-size: 12px;
+  color: #f6483d;
+}
+
+.eye {
+}

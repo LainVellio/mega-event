@@ -1,0 +1,25 @@
+.authForm {
+  width: 314px;
+  margin: 120px auto 0 auto;
+}
+
+.authForm h1 {
+  margin-bottom: 60px;
+  font-family: Halvar;
+  color: #ffffff;
+  font-weight: lighter;
+  font-size: 28px;
+}
+
+.button {
+  display: block;
+  margin: 40px auto 0 auto;
+  font-family: PT_Root_UI;
+  font-weight: normal;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #ab81f1;
+  border: none;
+  border-radius: 14px;
+  padding: 8px 24px;
+}

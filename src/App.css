@@ -1,38 +1,57 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container {
+  margin: 0 auto;
+  width: 1440px;
+  height: 990px;
+  background-color: #06091f;
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  font-family: Halvar;
+  font-size: 53px;
+  font-weight: 400;
+  color: #ffffff;
+  padding-top: 38px;
 }
 
-.App-link {
-  color: #61dafb;
+@font-face {
+  font-family: 'Halvar';
+  src: url('./Fonts/Halvar\ Breitschrift/Halvar Breitschrift Medium.ttf')
+    format('truetype');
+  font-weight: medium;
+  font-style: normal;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: 'Halvar';
+  src: url('./Fonts/Halvar\ Breitschrift/Halvar Breitschrift Regular.ttf')
+    format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Halvar';
+  src: url('./Fonts/Halvar\ Breitschrift/Halvar Breitschrift Light.ttf')
+    format('truetype');
+  font-weight: lighter;
+}
+
+@font-face {
+  font-family: 'PT_Root_UI';
+  src: url('./Fonts/PT\ Root\ UI/PT Root UI_Medium.ttf') format('truetype');
+  font-style: medium;
+}
+
+@font-face {
+  font-family: 'PT_Root_UI';
+  src: url('./Fonts/PT\ Root\ UI/PT Root UI_Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PT_Root_UI';
+  src: url('./Fonts/PT\ Root\ UI/PT Root UI_Regular.ttf') format('truetype');
+  font-style: normal;
 }
