@@ -7,7 +7,7 @@
 
 .App-header {
   text-align: center;
-  font-family: Halvar;
+  font-family: Halvar_medium;
   font-size: 53px;
   font-weight: 400;
   color: #ffffff;
@@ -15,10 +15,10 @@
 }
 
 @font-face {
-  font-family: 'Halvar';
+  font-family: 'Halvar_medium';
   src: url('./Fonts/Halvar\ Breitschrift/Halvar Breitschrift Medium.ttf')
     format('truetype');
-  font-weight: medium;
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -38,9 +38,9 @@
 }
 
 @font-face {
-  font-family: 'PT_Root_UI';
+  font-family: 'PT_Root_UI_medium';
   src: url('./Fonts/PT\ Root\ UI/PT Root UI_Medium.ttf') format('truetype');
-  font-style: medium;
+  font-style: normal;
 }
 
 @font-face {
@@ -53,5 +53,6 @@
 @font-face {
   font-family: 'PT_Root_UI';
   src: url('./Fonts/PT\ Root\ UI/PT Root UI_Regular.ttf') format('truetype');
+  font-weight: normal;
   font-style: normal;
 }

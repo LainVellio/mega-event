@@ -1,16 +1,23 @@
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import './App.css';
-import AuthorizationContainer from './components/Authorization/AuthorizationContainer';
+import Authorization from './components/Authorization/Authorization';
+import Questionary from './components/Questionary/Questionary';
+import FinalPage from './components/Final/FinalPage';
 
-function App() {
+const App = (props) => {
   return (
     <BrowserRouter>
+      <Redirect to="/login" />
       <div className="container">
         <header className="App-header">Codding Mega Event</header>
-        <AuthorizationContainer />
+        <Route exact path="/login" component={Authorization} />
+        <Route exact path="/questionary" component={Questionary} />
+        <Route exact path="/result" component={FinalPage} />
       </div>
     </BrowserRouter>
   );
-}
+};
 
 export default App;

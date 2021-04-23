@@ -6,7 +6,6 @@ import eyeClosed from '../../../assets/Images/EyeClosed.svg';
 
 class Input extends React.Component {
   state = {
-    value: '',
     isFocused: false,
     isTouched: false,
     error: '',
@@ -14,29 +13,24 @@ class Input extends React.Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    prevState.value !== this.state.value ||
-      (prevState.isFocused !== this.state.isFocused &&
-        this.props.validate &&
-        this.props.validate.map((validator) =>
-          this.setState({ error: validator(this.state.value) }),
-        ));
+    if (
+      (prevProps.value !== this.props.value ||
+        prevState.isFocused !== this.state.isFocused) &&
+      this.props.validate
+    ) {
+      const error = this.props.validate
+        .map((validator) => validator(this.props.value))
+        .find((e) => e);
+      this.setState({ error: error });
+      this.props.setValidate(this.props.id, !error);
+    }
   }
-
-  onChange = (e) => {
-    const value = e.currentTarget.value;
-    this.setState({
-      value: value,
-    });
-    console.log('отпустил', this.state.isPasswordVisible);
-  };
 
   onFocus = (event) => {
     this.setState({
       isFocused: true,
       isTouched: true,
     });
-    this.ref.selectionStart = this.state.value.length;
-    this.ref.selectionEnd = this.state.value.length;
   };
 
   onBlur = () => {
@@ -49,7 +43,6 @@ class Input extends React.Component {
     this.setState({
       isPasswordVisible: true,
     });
-    this.ref.focus();
   };
 
   onMouseUpEye = () => {
@@ -75,15 +68,16 @@ class Input extends React.Component {
             this.state.isFocused && styles.selected
           }`}
         >
-          {(this.state.value || this.state.isFocused) && (
+          {(this.props.value || this.state.isFocused) && (
             <label>{this.props.placeholder}</label>
           )}
           <input
             className={
-              (this.state.value || this.state.isFocused) && styles.inputModified
+              (this.props.value || this.state.isFocused) && styles.inputModified
             }
-            value={this.value}
-            onChange={this.onChange}
+            id={this.props.id}
+            value={this.props.value}
+            onChange={this.props.onChange}
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             placeholder={this.props.placeholder}
@@ -92,7 +86,6 @@ class Input extends React.Component {
                 ? 'text'
                 : this.props.type
             }
-            autocomplete="off"
             ref={(ref) => (this.ref = ref)}
           />
           {this.props.type === 'password' && (

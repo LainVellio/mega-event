@@ -1,0 +1,96 @@
+h1 {
+  margin: 120px 0 28px 0;
+  text-align: center;
+  font-family: Halvar;
+  font-size: 28px;
+  font-weight: normal;
+  color: #ffffff;
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 14px;
+  background-color: #1f2235;
+  width: 288px;
+  height: 48px;
+  margin: 0 auto 60px auto;
+}
+
+.switchButton {
+  font-family: PT_Root_UI_medium;
+  font-size: 18px;
+  padding: 8px 0;
+  font-weight: normal;
+  color: #676c7a;
+  width: 132px;
+  margin: 0 5px 0 0;
+  text-align: center;
+  border-radius: 14px;
+}
+
+.selected {
+  color: #ffffff;
+  background-color: #ab81f1;
+  margin: 0 0 0 5px;
+}
+
+.questionary {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 38px;
+}
+
+.personalDataLeft {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 317px;
+}
+
+.personalDataRight {
+  display: flex;
+  flex-direction: column;
+  width: 317px;
+}
+
+.divider {
+  display: flex;
+  justify-content: center;
+  width: 72px;
+}
+
+.divider img {
+  margin: 0px;
+}
+
+h2 {
+  align-self: flex-start;
+  color: #fff;
+  font-family: PT_Root_UI_medium;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: normal;
+  margin-bottom: 16px;
+}
+
+.checkboxBlock {
+  margin-top: 67px;
+}
+
+.select {
+  position: absolute;
+  margin-top: 52px;
+  z-index: 2;
+}
+
+.switchButton {
+  margin-left: 5px;
+  background-color: #1f2235 !important;
+}
+
+.switchButton:disabled {
+  color: #fff !important;
+  background-color: #ab81f1 !important;
+}

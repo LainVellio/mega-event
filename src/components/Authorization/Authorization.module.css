@@ -1,3 +1,9 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .authForm {
   width: 314px;
   margin: 120px auto 0 auto;
@@ -11,15 +17,6 @@
   font-size: 28px;
 }
 
-.button {
-  display: block;
-  margin: 40px auto 0 auto;
-  font-family: PT_Root_UI;
-  font-weight: normal;
-  font-size: 18px;
-  color: #ffffff;
-  background-color: #ab81f1;
-  border: none;
-  border-radius: 14px;
-  padding: 8px 24px;
+.inputBlock {
+  margin-bottom: 22px;
 }

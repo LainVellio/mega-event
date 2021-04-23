@@ -1,0 +1,55 @@
+.selectBlock {
+  color: #676c7a;
+  font-family: PT_Root_UI_medium;
+  font-style: normal;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.inputBlock {
+  width: 288px;
+  margin: 0;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: #1f2235;
+}
+
+.input {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  height: 40px;
+  background-color: #1f2235;
+  border-radius: 4px;
+}
+
+.text {
+  z-index: 2;
+  color: #676c7a;
+  font-family: PT_Root_UI_medium;
+  font-style: normal;
+  font-size: 14px;
+}
+
+.img {
+  margin: 0;
+}
+
+.date {
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1f2235;
+  padding: 0 12px;
+  height: 30px;
+  margin: 0;
+}
+.date:active {
+  background-color: #ab81f1;
+  color: #fff;
+}

@@ -3,7 +3,14 @@ export const required = (value) => {
   return 'Поле обязательно для заполнения';
 };
 
-export const maxLengthCreator = (maxLength) => (value) => {
-  if (value.length > maxLength) return `Max length is ${maxLength} symbols`;
-  return undefined;
+export const email = (value) => {
+  const re = /\S+@\S+\.\S+/;
+  if (re.test(value)) return undefined;
+  return 'Неверный Email';
+};
+
+export const tel = (value) => {
+  const re = /\+7\d{10}/;
+  if (re.test(value)) return undefined;
+  return 'Некорректный телефон';
 };

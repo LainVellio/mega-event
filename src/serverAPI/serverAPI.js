@@ -8,7 +8,6 @@ const serverAPI = {
       url: 'http://pink-code.ru:20085/auth',
       headers: { 'Content-Type': 'application/json' },
       data: { username: 'user@example.com', password: 'user8952' },
-      referrerPolicy: 'strict-origin-when-cross-origin',
     }).then((response) => response);
   },
 };

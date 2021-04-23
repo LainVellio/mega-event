@@ -1,0 +1,22 @@
+.button {
+  display: block;
+  margin: 0px auto 0 auto;
+  font-family: PT_Root_UI_medium;
+  font-weight: normal;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #ab81f1;
+  border: none;
+  border-radius: 14px;
+  padding: 7px 24px 9px 24px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  color: #676c7a;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.button:active {
+  background-color: #8852e1;
+}
