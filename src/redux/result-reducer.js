@@ -1,7 +1,13 @@
 const SET_RESULT = 'SET_RESULT';
 
 const initialState = {
-  result: {},
+  result: {
+    checkbox: [],
+    inputs: [],
+    selectData: [],
+    switch: false,
+    isResult: false,
+  },
 };
 
 const resultReducer = (state = initialState, action) => {
