@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import Button from '../common/Forms/Button';
+
+import Button from '../Common/Forms/Button';
 import styles from './FinalPage.module.css';
 
 class FinalPage extends React.Component {

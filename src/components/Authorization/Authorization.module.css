@@ -2,21 +2,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.authForm {
-  width: 314px;
-  margin: 120px auto 0 auto;
-}
-
-.authForm h1 {
-  margin-bottom: 60px;
-  font-family: Halvar;
-  color: #ffffff;
-  font-weight: lighter;
-  font-size: 28px;
+  margin-top: 60px;
+  padding-bottom: 78px;
 }
 
 .inputBlock {
   margin-bottom: 22px;
+}
+
+@media only screen and (max-width: 750px) {
+  .form {
+    margin-top: 38px;
+  }
+  .inputBlock {
+    margin-bottom: 16px;
+  }
 }

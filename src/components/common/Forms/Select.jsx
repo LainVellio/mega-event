@@ -1,6 +1,6 @@
 import styles from './Select.module.css';
-import dropDown from '../../../assets/Images/arrow_drop_down.svg';
-import dropUp from '../../../assets/Images/arrow_drop_up.svg';
+import dropDown from '../../../assets/Images/ArrowDropDown.svg';
+import dropUp from '../../../assets/Images/ArrowDropUp.svg';
 import React from 'react';
 
 class Select extends React.Component {
@@ -21,7 +21,6 @@ class Select extends React.Component {
         this.setState({ isOpen: false });
         props.selectDate(props.data.id);
       };
-
       return (
         <div className={styles.input}>
           <div

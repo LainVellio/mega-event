@@ -10,8 +10,8 @@ const App = (props) => {
   return (
     <BrowserRouter>
       <Redirect to="/login" />
-      <div className="container">
-        <header className="App-header">Codding Mega Event</header>
+      <div>
+        <header>Codding Mega Event</header>
         <Route exact path="/login" component={Authorization} />
         <Route exact path="/questionary" component={Questionary} />
         <Route exact path="/result" component={FinalPage} />

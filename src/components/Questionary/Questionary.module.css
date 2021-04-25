@@ -1,10 +1,5 @@
-h1 {
-  margin: 120px 0 28px 0;
-  text-align: center;
-  font-family: Halvar;
-  font-size: 28px;
-  font-weight: normal;
-  color: #ffffff;
+.container {
+  padding-bottom: 78px;
 }
 
 .switch {
@@ -15,7 +10,7 @@ h1 {
   background-color: #1f2235;
   width: 288px;
   height: 48px;
-  margin: 0 auto 60px auto;
+  margin: 28px auto 60px auto;
 }
 
 .switchButton {
@@ -49,39 +44,29 @@ h1 {
   width: 317px;
 }
 
+.dividerLeft {
+  display: inline-block;
+  width: 36px;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dividerRight {
+  display: inline-block;
+  width: 36px;
+}
+
 .personalDataRight {
   display: flex;
   flex-direction: column;
   width: 317px;
 }
 
-.divider {
-  display: flex;
-  justify-content: center;
-  width: 72px;
-}
-
-.divider img {
-  margin: 0px;
-}
-
-h2 {
-  align-self: flex-start;
-  color: #fff;
-  font-family: PT_Root_UI_medium;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: normal;
-  margin-bottom: 16px;
-}
-
 .checkboxBlock {
-  margin-top: 67px;
+  margin-top: 82px;
 }
 
 .select {
   position: absolute;
-  margin-top: 52px;
   z-index: 2;
 }
 
@@ -93,4 +78,37 @@ h2 {
 .switchButton:disabled {
   color: #fff !important;
   background-color: #ab81f1 !important;
+}
+
+@media only screen and (max-width: 750px) {
+  .switch {
+    margin: 38px auto;
+  }
+
+  .questionary {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 38px;
+  }
+
+  .personalDataLeft {
+    align-items: center;
+  }
+
+  .dividerLeft {
+    display: block;
+    width: 311px;
+    height: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-right: none;
+  }
+  .dividerRight {
+    display: block;
+    height: 16px;
+  }
+
+  .personalDataRight {
+    width: 288px;
+    align-items: center;
+  }
 }

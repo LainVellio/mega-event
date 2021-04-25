@@ -12,11 +12,16 @@
   cursor: pointer;
 }
 
-.button:disabled {
+.button:disabled,
+.button:disabled:hover {
   color: #676c7a;
   background-color: rgba(255, 255, 255, 0.2);
 }
 
 .button:active {
+  background-color: #8852e1;
+}
+
+.button:hover {
   background-color: #8852e1;
 }

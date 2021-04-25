@@ -1,14 +1,14 @@
 import React from 'react';
-import Checkbox from '../common/Forms/Checkbox';
-import Input from '../common/Forms/Input';
-import styles from './Questionary.module.css';
-import line from '../../assets/Images/Line.svg';
-import { connect } from 'react-redux';
-import { required } from '../common/validators/validators';
-import Select from '../common/Forms/Select';
-import Button from '../common/Forms/Button';
-import { setResult } from '../../redux/result-reducer';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+
+import { setResult } from '../../redux/ResultReducer';
+import Checkbox from '../Common/Forms/Checkbox';
+import Input from '../Common/Forms/Input';
+import Select from '../Common/Forms/Select';
+import Button from '../Common/Forms/Button';
+import { required } from '../Common/Validators/Validators';
+import styles from './Questionary.module.css';
 
 class Questionary extends React.Component {
   state = {
@@ -81,7 +81,6 @@ class Questionary extends React.Component {
   };
 
   setValidate = (id, isValidate) => {
-    console.log(this.state.inputs[0].isValidate);
     this.setState({
       ...this.state,
       inputs: this.state.inputs.map((i) =>
@@ -91,7 +90,6 @@ class Questionary extends React.Component {
   };
 
   selectDate = (id) => {
-    console.log('id', id);
     this.setState({
       ...this.state,
       selectData: this.state.selectData.map((i) =>
@@ -139,7 +137,6 @@ class Questionary extends React.Component {
       this.state.switch
         ? !inputs.slice(0, 3).every((i) => i.isValidate === true)
         : !inputs.slice(5).every((i) => i.isValidate === true);
-    console.log(is);
     return is;
   };
 
@@ -150,7 +147,7 @@ class Questionary extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className={styles.container}>
         {!this.props.isAuth && <Redirect to="/login" />}
         <h1>Заполните анкету участника</h1>
         <div className={styles.switch}>
@@ -196,22 +193,24 @@ class Questionary extends React.Component {
             )}
           </div>
 
-          <div className={styles.divider}>
-            <img src={line} alt="" />
-          </div>
+          <div className={styles.dividerLeft}></div>
+          <div className={styles.dividerRight}></div>
+
           <div className={styles.personalDataRight}>
-            <h2>Выберите дату мероприятия</h2>
-            <div className={styles.checkbox}></div>
-            <div className={styles.select}>
-              <Select
-                selectData={this.state.selectData}
-                selectDate={this.selectDate}
-              />
-            </div>
-            <div className={styles.checkboxBlock}>
-              {this.state.checkbox.map((checkbox) => (
-                <Checkbox {...checkbox} onClick={this.onChecked} />
-              ))}
+            <div>
+              <h2>Выберите дату мероприятия</h2>
+              <div className={styles.checkbox}></div>
+              <div className={styles.select}>
+                <Select
+                  selectData={this.state.selectData}
+                  selectDate={this.selectDate}
+                />
+              </div>
+              <div className={styles.checkboxBlock}>
+                {this.state.checkbox.map((checkbox) => (
+                  <Checkbox {...checkbox} onClick={this.onChecked} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
