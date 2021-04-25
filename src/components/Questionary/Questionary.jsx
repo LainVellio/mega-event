@@ -84,7 +84,7 @@ class Questionary extends React.Component {
     this.setState({
       ...this.state,
       inputs: this.state.inputs.map((i) =>
-        i.id == id ? { ...i, isValidate } : i,
+        i.id === Number(id) ? { ...i, isValidate } : i,
       ),
     });
   };
@@ -93,7 +93,9 @@ class Questionary extends React.Component {
     this.setState({
       ...this.state,
       selectData: this.state.selectData.map((i) =>
-        i.id == id ? { ...i, isSelected: true } : { ...i, isSelected: false },
+        i.id === Number(id)
+          ? { ...i, isSelected: true }
+          : { ...i, isSelected: false },
       ),
     });
   };
@@ -104,7 +106,7 @@ class Questionary extends React.Component {
     this.setState({
       ...this.state,
       inputs: this.state.inputs.map((i) =>
-        i.id == id ? { ...i, value: value.slice(0, i.maxLength) } : i,
+        i.id === Number(id) ? { ...i, value: value.slice(0, i.maxLength) } : i,
       ),
     });
   };
@@ -118,7 +120,7 @@ class Questionary extends React.Component {
     this.setState({
       ...this.state,
       checkbox: this.state.checkbox.map((i) =>
-        i.id == id ? { ...i, checked: !i.checked } : i,
+        i.id === Number(id) ? { ...i, checked: !i.checked } : i,
       ),
     });
   };
@@ -173,6 +175,7 @@ class Questionary extends React.Component {
                 <h2>Личные данные</h2>
                 {this.state.inputs.slice(0, 3).map((i) => (
                   <Input
+                    key={i.id}
                     {...i}
                     onChange={this.onChange}
                     setValidate={this.setValidate}
@@ -184,6 +187,7 @@ class Questionary extends React.Component {
                 <h2>Личные данные</h2>
                 {this.state.inputs.slice(3).map((i) => (
                   <Input
+                    key={i.id}
                     {...i}
                     onChange={this.onChange}
                     setValidate={this.setValidate}
@@ -208,7 +212,11 @@ class Questionary extends React.Component {
               </div>
               <div className={styles.checkboxBlock}>
                 {this.state.checkbox.map((checkbox) => (
-                  <Checkbox {...checkbox} onClick={this.onChecked} />
+                  <Checkbox
+                    key={checkbox.id}
+                    {...checkbox}
+                    onClick={this.onChecked}
+                  />
                 ))}
               </div>
             </div>

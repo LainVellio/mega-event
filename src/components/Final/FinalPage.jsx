@@ -32,13 +32,22 @@ class FinalPage extends React.Component {
           {res.switch
             ? res.inputs
                 .slice(0, 3)
-                .map((i) => <Item label={i.placeholder} value={i.value} />)
+                .map((i) => (
+                  <Item key={i.id} label={i.placeholder} value={i.value} />
+                ))
             : res.inputs
                 .slice(3)
-                .map((i) => <Item label={i.placeholder} value={i.value} />)}
+                .map((i) => (
+                  <Item key={i.id} label={i.placeholder} value={i.value} />
+                ))}
           <div className={styles.label}>Опции</div>
           {res.checkbox.map(
-            (i) => i.checked && <div className={styles.option}>{i.text}</div>,
+            (i) =>
+              i.checked && (
+                <div key={i.id} className={styles.option}>
+                  {i.text}
+                </div>
+              ),
           )}
         </div>
         <Button onClick={this.onRedirect}>Вернуться на главную</Button>

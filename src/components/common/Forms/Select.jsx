@@ -49,7 +49,7 @@ class Select extends React.Component {
         {this.state.isOpen && (
           <div className={styles.inputBlock}>
             {this.props.selectData.map((i) => (
-              <Field data={i} selectDate={this.props.selectDate} />
+              <Field key={i.id} data={i} selectDate={this.props.selectDate} />
             ))}
           </div>
         )}

@@ -34,7 +34,7 @@ class Authorization extends React.Component {
     this.setState({
       ...this.state,
       inputs: this.state.inputs.map((i) =>
-        i.id == id ? { ...i, isValidate } : i,
+        i.id === Number(id) ? { ...i, isValidate } : i,
       ),
     });
   };
@@ -44,7 +44,9 @@ class Authorization extends React.Component {
     const value = e.currentTarget.value;
     this.setState({
       ...this.state,
-      inputs: this.state.inputs.map((i) => (i.id == id ? { ...i, value } : i)),
+      inputs: this.state.inputs.map((i) =>
+        i.id === Number(id) ? { ...i, value } : i,
+      ),
     });
   };
 
@@ -61,6 +63,7 @@ class Authorization extends React.Component {
           <div className={styles.inputBlock}>
             {this.state.inputs.map((input) => (
               <Input
+                key={input.id}
                 {...input}
                 onChange={this.onChange}
                 setValidate={this.setValidate}

@@ -74,7 +74,9 @@ class Input extends React.Component {
           )}
           <input
             className={
-              (this.props.value || this.state.isFocused) && styles.inputModified
+              ((this.props.value || this.state.isFocused) &&
+                styles.inputModified) ||
+              ''
             }
             id={this.props.id}
             value={this.props.value}
