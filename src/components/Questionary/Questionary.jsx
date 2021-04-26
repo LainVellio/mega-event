@@ -2,13 +2,14 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-import { setResult } from '../../redux/ResultReducer';
-import Checkbox from '../Common/Forms/Checkbox';
-import Input from '../Common/Forms/Input';
-import Select from '../Common/Forms/Select';
-import Button from '../Common/Forms/Button';
-import { required } from '../Common/Validators/Validators';
-import styles from './Questionary.module.css';
+import { setResult } from '../../redux/resultReducer';
+import Checkbox from '../common/forms/checkbox';
+import Input from '../common/forms/input';
+import Select from '../common/forms/select';
+import Button from '../common/forms/button';
+import { required } from '../common/validators/validators';
+import commonStyles from '../../App.module.css';
+import styles from './questionary.module.css';
 
 class Questionary extends React.Component {
   state = {
@@ -151,7 +152,7 @@ class Questionary extends React.Component {
     return (
       <div className={styles.container}>
         {!this.props.isAuth && <Redirect to="/login" />}
-        <h1>Заполните анкету участника</h1>
+        <h1 className={commonStyles.h1}>Заполните анкету участника</h1>
         <div className={styles.switch}>
           <Button
             onClick={this.onSwitch}
@@ -172,7 +173,7 @@ class Questionary extends React.Component {
           <div className={styles.personalDataLeft}>
             {this.state.switch ? (
               <div>
-                <h2>Личные данные</h2>
+                <h2 className={commonStyles.h2}>Личные данные</h2>
                 {this.state.inputs.slice(0, 3).map((i) => (
                   <Input
                     key={i.id}
@@ -184,7 +185,7 @@ class Questionary extends React.Component {
               </div>
             ) : (
               <div>
-                <h2>Личные данные</h2>
+                <h2 className={commonStyles.h2}>Личные данные</h2>
                 {this.state.inputs.slice(3).map((i) => (
                   <Input
                     key={i.id}
@@ -202,7 +203,7 @@ class Questionary extends React.Component {
 
           <div className={styles.personalDataRight}>
             <div>
-              <h2>Выберите дату мероприятия</h2>
+              <h2 className={commonStyles.h2}>Выберите дату мероприятия</h2>
               <div className={styles.checkbox}></div>
               <div className={styles.select}>
                 <Select

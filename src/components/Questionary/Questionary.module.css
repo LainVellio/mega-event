@@ -72,7 +72,13 @@
 
 .switchButton {
   margin-left: 5px;
-  background-color: #1f2235 !important;
+  background-color: rgba(255, 255, 255, 0);
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.switchButton:hover {
+  background-color: rgba(171, 129, 241, 0.4);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .switchButton:disabled {

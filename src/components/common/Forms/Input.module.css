@@ -12,9 +12,10 @@
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0);
+  transition: border 0.5s;
 }
 
-.input input {
+.inputField {
   flex-grow: 1;
   display: block;
   background-color: initial;
@@ -27,12 +28,12 @@
   font-size: 14px;
 }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
+.inputField::-webkit-outer-spin-button,
+.inputField::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input[type='number'] {
+.inputField[type='number'] {
   -moz-appearance: textfield;
 }
 
@@ -49,7 +50,7 @@ input[type='number'] {
   font-size: 14px;
 }
 
-label {
+.label {
   align-self: flex-start;
   position: absolute;
   display: block;
@@ -80,9 +81,9 @@ label {
   margin-right: 0px;
 }
 
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus {
+.inputField:-webkit-autofill,
+.inputField:-webkit-autofill:hover,
+.inputField:-webkit-autofill:focus {
   -webkit-text-fill-color: #fff;
   box-shadow: 0px 0px 0px 1000px #1f2236 inset;
   -webkit-box-shadow: 0px 0px 0px 1000px #1f2236 inset;

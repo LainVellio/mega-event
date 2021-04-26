@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-import Button from '../Common/Forms/Button';
-import styles from './FinalPage.module.css';
+import Button from '../common/forms/button';
+import commonStyles from '../../App.module.css';
+import styles from './finalPage.module.css';
 
 class FinalPage extends React.Component {
   state = { isRedirect: false };
@@ -22,7 +23,7 @@ class FinalPage extends React.Component {
     );
     return (
       <div className={styles.container}>
-        <h1 className={styles.h1}>Спасибо за заявку</h1>
+        <h1 className={commonStyles.h1}>Спасибо за заявку!</h1>
         <div className={styles.result}>
           {res.switch ? (
             <Item label="Тип участника" value="Физ. лицо" />

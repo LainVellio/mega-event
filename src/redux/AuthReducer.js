@@ -1,4 +1,4 @@
-import serverAPI from '../serverAPI/ServerAPI';
+import serverAPI from '../serverAPI/serverAPI';
 
 const SET_AUTH = 'SET_AUTH';
 

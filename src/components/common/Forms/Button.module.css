@@ -10,6 +10,7 @@
   border-radius: 14px;
   padding: 7px 24px 9px 24px;
   cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 .button:disabled,

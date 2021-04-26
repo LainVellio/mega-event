@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-import Input from '../Common/Forms/Input';
-import Button from '../Common/Forms/Button';
-import { email, required } from '../Common/Validators/Validators';
-import { login } from '../../redux/AuthReducer';
-import styles from './Authorization.module.css';
+import Input from '../common/forms/input';
+import Button from '../common/forms/button';
+import { email, required } from '../common/validators/validators';
+import { login } from '../../redux/authReducer';
+import commonStyles from '../../App.module.css';
+import styles from './authorization.module.css';
 
 class Authorization extends React.Component {
   state = {
@@ -58,7 +59,7 @@ class Authorization extends React.Component {
     return (
       <div>
         {this.props.isAuth && <Redirect to="/questionary" />}
-        <h1>Добро пожаловать</h1>
+        <h1 className={commonStyles.h1}>Добро пожаловать</h1>
         <form className={styles.form}>
           <div className={styles.inputBlock}>
             {this.state.inputs.map((input) => (

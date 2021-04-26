@@ -1,11 +1,15 @@
-import styles from './Checkbox.module.css';
-import stateOn from '../../../assets/Images/CheckboxOn.svg';
-import stateOff from '../../../assets/Images/CheckboxOff.svg';
+import styles from './checkbox.module.css';
+import stateOn from '../../../assets/images/checkboxOn.svg';
+import stateOff from '../../../assets/images/checkboxOff.svg';
 
 const Checkbox = (props) => {
   return (
     <div id={props.id} onClick={props.onClick} className={styles.container}>
-      <img src={props.checked ? stateOn : stateOff} alt="" />
+      <img
+        className={styles.img}
+        src={props.checked ? stateOn : stateOff}
+        alt=""
+      />
       <div className={styles.text}>{props.text}</div>
     </div>
   );
