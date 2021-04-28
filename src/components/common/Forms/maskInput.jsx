@@ -1,16 +1,13 @@
 import React from 'react';
+import MaskedInput from 'react-text-mask';
 
 import styles from './input.module.css';
-import eyeOpenDisabled from '../../../assets/images/eyeOpenDisabled.svg';
-import eyeOpenActive from '../../../assets/images/eyeOpenActive.svg';
-import eyeClosed from '../../../assets/images/eyeClosed.svg';
 
-class Input extends React.Component {
+class MaskInput extends React.Component {
   state = {
     isFocused: false,
     isTouched: false,
     error: '',
-    isPasswordVisible: false,
   };
 
   checkValidate = () => {
@@ -44,27 +41,6 @@ class Input extends React.Component {
     });
   };
 
-  onMouseDownEye = () => {
-    this.setState({
-      isPasswordVisible: true,
-    });
-  };
-
-  onMouseUpEye = () => {
-    this.setState({
-      isPasswordVisible: false,
-    });
-    this.ref.focus();
-  };
-
-  onChangeEye = () => {
-    if (!this.state.isFocused && !this.state.isPasswordVisible) {
-      return eyeOpenDisabled;
-    } else if (this.state.isFocused && !this.state.isPasswordVisible) {
-      return eyeClosed;
-    } else return eyeOpenActive;
-  };
-
   render() {
     return (
       <div className={styles.inputBlock}>
@@ -76,7 +52,10 @@ class Input extends React.Component {
           {(this.props.value || this.state.isFocused) && (
             <label className={styles.label}>{this.props.placeholder}</label>
           )}
-          <input
+          <MaskedInput
+            mask={this.props.mask}
+            showMask={false}
+            placeholderChar={'\u2000'}
             disabled={this.props.disabled}
             className={
               styles.inputField +
@@ -90,23 +69,8 @@ class Input extends React.Component {
             onFocus={this.onFocus}
             onBlur={this.onBlur}
             placeholder={this.props.placeholder}
-            type={
-              this.props.type === 'password' && this.state.isPasswordVisible
-                ? 'text'
-                : this.props.type
-            }
-            ref={(ref) => (this.ref = ref)}
+            type={this.props.type}
           />
-
-          {this.props.type === 'password' && (
-            <img
-              onMouseDown={this.onMouseDownEye}
-              onMouseUp={this.onMouseUpEye}
-              className={styles.eye}
-              src={this.onChangeEye()}
-              alt=""
-            />
-          )}
         </div>
         {this.state.isTouched && !this.state.isFocused && this.state.error && (
           <div className={styles.error}>{this.state.error}</div>
@@ -116,4 +80,4 @@ class Input extends React.Component {
   }
 }
 
-export default Input;
+export default MaskInput;

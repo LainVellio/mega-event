@@ -5,11 +5,15 @@ import { Redirect } from 'react-router';
 import Input from '../common/forms/input';
 import Button from '../common/forms/button';
 import { email, required } from '../common/validators/validators';
-import { login } from '../../redux/authReducer';
+import { login, setServerErrorMessage } from '../../redux/reducer';
 import commonStyles from '../../App.module.css';
 import styles from './authorization.module.css';
 
 class Authorization extends React.Component {
+  constructor(props) {
+    super(props);
+    this.wrapper = React.createRef();
+  }
   state = {
     inputs: [
       {
@@ -18,7 +22,7 @@ class Authorization extends React.Component {
         placeholder: 'E-mail',
         type: 'text',
         validate: [required, email],
-        isValidate: false,
+        isValidate: true,
       },
       {
         id: 1,
@@ -26,10 +30,21 @@ class Authorization extends React.Component {
         placeholder: 'Пароль',
         type: 'password',
         validate: [required],
-        isValidate: false,
+        isValidate: true,
       },
     ],
   };
+
+  componentDidMount() {
+    const EMAIL = process.env.REACT_APP_EMAIL || '';
+    const PASSWORD = process.env.REACT_APP_PASSWORD || '';
+    this.setState({
+      ...this.state,
+      inputs: this.state.inputs.map((i) =>
+        i.id === 0 ? { ...i, value: EMAIL } : { ...i, value: PASSWORD },
+      ),
+    });
+  }
 
   setValidate = (id, isValidate) => {
     this.setState({
@@ -43,6 +58,7 @@ class Authorization extends React.Component {
   onChange = (e) => {
     const id = e.currentTarget.id;
     const value = e.currentTarget.value;
+    this.props.setServerErrorMessage('');
     this.setState({
       ...this.state,
       inputs: this.state.inputs.map((i) =>
@@ -52,7 +68,19 @@ class Authorization extends React.Component {
   };
 
   onClick = () => {
-    this.props.login(this.state.email, this.state.password);
+    const email = this.state.inputs[0].value;
+    const password = this.state.inputs[1].value;
+    this.props.login(email, password);
+  };
+
+  isDisabledButton = () => {
+    return (
+      !this.state.inputs.every((i) => i.isValidate === true) ||
+      this.props.isServerProgress
+    );
+  };
+  isDisabledInput = () => {
+    return this.props.isServerProgress;
   };
 
   render() {
@@ -60,31 +88,47 @@ class Authorization extends React.Component {
       <div>
         {this.props.isAuth && <Redirect to="/questionary" />}
         <h1 className={commonStyles.h1}>Добро пожаловать</h1>
-        <form className={styles.form}>
+        <div className={styles.form}>
           <div className={styles.inputBlock}>
-            {this.state.inputs.map((input) => (
+            <div className={styles.email}>
               <Input
-                key={input.id}
-                {...input}
+                disabled={this.isDisabledInput()}
+                key={this.state.inputs[0].id}
+                {...this.state.inputs[0]}
                 onChange={this.onChange}
                 setValidate={this.setValidate}
               />
-            ))}
+            </div>
+
+            <div>
+              <Input
+                disabled={this.isDisabledInput()}
+                key={this.state.inputs[1].id}
+                {...this.state.inputs[1]}
+                onChange={this.onChange}
+                setValidate={this.setValidate}
+              />
+              <div className={styles.serverError}>
+                {this.props.serverErrorMessage}
+              </div>
+            </div>
           </div>
-          <Button
-            onClick={this.onClick}
-            disabled={!this.state.inputs.every((i) => i.isValidate === true)}
-          >
+          <Button onClick={this.onClick} disabled={this.isDisabledButton()}>
             Войти
           </Button>
-        </form>
+        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth,
+  isAuth: state.reducer.isAuth,
+  isServerProgress: state.reducer.isServerProgress,
+  serverErrorMessage: state.reducer.serverErrorMessage,
+  isListComplete: state.reducer.isListComplete,
 });
 
-export default connect(mapStateToProps, { login })(Authorization);
+export default connect(mapStateToProps, { login, setServerErrorMessage })(
+  Authorization,
+);

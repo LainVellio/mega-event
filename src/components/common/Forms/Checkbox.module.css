@@ -5,6 +5,10 @@
   cursor: pointer;
 }
 
+.disabledContainer {
+  pointer-events: none;
+}
+
 .img {
   margin-right: 11px;
   cursor: pointer;
@@ -17,4 +21,8 @@
   font-style: normal;
   font-weight: 400;
   line-height: 20.16px;
+}
+
+.textDisabled {
+  color: #676c7a;
 }

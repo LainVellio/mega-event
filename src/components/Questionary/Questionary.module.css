@@ -2,6 +2,10 @@
   padding-bottom: 78px;
 }
 
+.input {
+  margin-bottom: 16px;
+}
+
 .switch {
   display: flex;
   align-items: center;
@@ -11,6 +15,9 @@
   width: 288px;
   height: 48px;
   margin: 28px auto 60px auto;
+}
+.switchDisabled {
+  pointer-events: none;
 }
 
 .switchButton {

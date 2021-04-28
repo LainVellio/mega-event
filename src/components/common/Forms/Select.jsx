@@ -12,8 +12,8 @@ class Select extends React.Component {
   };
 
   isSelected = () => {
-    const item = this.props.selectData.find((i) => i.isSelected === true);
-    return item ? item.date : 'День мероприятия';
+    const item = this.props.eventsDate.find((i) => i.isSelected === true);
+    return item ? item.label : 'День мероприятия';
   };
 
   render() {
@@ -29,7 +29,7 @@ class Select extends React.Component {
             onClick={onClickDate}
             className={`${styles.date}`}
           >
-            {props.data.date}
+            {props.data.label}
           </div>
         </div>
       );
@@ -37,8 +37,17 @@ class Select extends React.Component {
 
     return (
       <div className={styles.selectBlock}>
-        <div onClick={this.onClickMain} className={styles.inputBlock}>
-          <div className={`${styles.input}`}>
+        <div
+          onClick={this.onClickMain}
+          className={`${styles.inputBlock} ${
+            this.props.disabled ? styles.inputBlockDisabled : ''
+          }`}
+        >
+          <div
+            className={`${styles.input} ${
+              this.props.disabled ? styles.inputDisabled : ''
+            }`}
+          >
             <div className={styles.text}>{this.isSelected()}</div>
             <img
               className={styles.img}
@@ -49,7 +58,7 @@ class Select extends React.Component {
         </div>
         {this.state.isOpen && (
           <div className={styles.inputBlock}>
-            {this.props.selectData.map((i) => (
+            {this.props.eventsDate.map((i) => (
               <Field key={i.id} data={i} selectDate={this.props.selectDate} />
             ))}
           </div>
