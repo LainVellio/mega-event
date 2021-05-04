@@ -7,13 +7,13 @@ import {
   selectDateItem,
   sendResultForm,
 } from '../../redux/reducer';
-import Checkbox from '../common/forms/checkbox';
-import Input from '../common/forms/input';
-import Select from '../common/forms/select';
-import Button from '../common/forms/button';
+import Checkbox from '../common/forms/Checkbox';
+import Input from '../common/forms/Input';
+import Select from '../common/forms/Select';
+import Button from '../common/forms/Button';
 import { required } from '../common/validators/validators';
 import commonStyles from '../../App.module.css';
-import styles from './questionary.module.css';
+import styles from './Questionary.module.css';
 import Preloader from '../common/preloader/preloader';
 import MaskInput from '../common/forms/maskInput';
 

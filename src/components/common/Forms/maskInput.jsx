@@ -1,7 +1,7 @@
 import React from 'react';
 import MaskedInput from 'react-text-mask';
 
-import styles from './input.module.css';
+import styles from './Input.module.css';
 
 class MaskInput extends React.Component {
   state = {

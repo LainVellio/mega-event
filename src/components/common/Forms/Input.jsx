@@ -1,9 +1,9 @@
 import React from 'react';
 
-import styles from './input.module.css';
-import eyeOpenDisabled from '../../../assets/images/eyeOpenDisabled.svg';
-import eyeOpenActive from '../../../assets/images/eyeOpenActive.svg';
-import eyeClosed from '../../../assets/images/eyeClosed.svg';
+import styles from './Input.module.css';
+import eyeOpenDisabled from '../../../assets/Images/EyeOpenDisabled.svg';
+import eyeOpenActive from '../../../assets/Images/EyeOpenActive.svg';
+import eyeClosed from '../../../assets/Images/EyeClosed.svg';
 
 class Input extends React.Component {
   state = {

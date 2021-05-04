@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-import Input from '../common/forms/input';
-import Button from '../common/forms/button';
+import Input from '../common/forms/Input';
+import Button from '../common/forms/Button';
 import { email, required } from '../common/validators/validators';
 import { login, setServerErrorMessage } from '../../redux/reducer';
 import commonStyles from '../../App.module.css';
-import styles from './authorization.module.css';
+import styles from './Authorization.module.css';
 
 class Authorization extends React.Component {
   constructor(props) {

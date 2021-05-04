@@ -3,9 +3,9 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
 import commonStyles from './App.module.css';
-import Authorization from './components/authorization/authorization';
-import Questionary from './components/questionary/questionary';
-import FinalPage from './components/final/finalPage';
+import Authorization from './components/Authorization/Authorization';
+import Questionary from './components/Questionary/Questionary';
+import FinalPage from './components/Final/FinalPage';
 import Error500 from './components/error/error500';
 import { connect } from 'react-redux';
 

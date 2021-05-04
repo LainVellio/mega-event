@@ -1,8 +1,8 @@
 import React from 'react';
 
-import styles from './select.module.css';
-import dropDown from '../../../assets/images/arrowDropDown.svg';
-import dropUp from '../../../assets/images/arrowDropUp.svg';
+import styles from './Select.module.css';
+import dropDown from '../../../assets/Images/ArrowDropDown.svg';
+import dropUp from '../../../assets/Images/ArrowDropUp.svg';
 
 class Select extends React.Component {
   state = { isOpen: false };

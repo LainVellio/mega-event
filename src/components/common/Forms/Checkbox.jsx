@@ -1,6 +1,6 @@
-import styles from './checkbox.module.css';
-import stateOn from '../../../assets/images/checkboxOn.svg';
-import stateOff from '../../../assets/images/checkboxOff.svg';
+import styles from './Checkbox.module.css';
+import stateOn from '../../../assets/Images/CheckboxOn.svg';
+import stateOff from '../../../assets/Images/CheckboxOff.svg';
 
 const Checkbox = (props) => {
   return (
