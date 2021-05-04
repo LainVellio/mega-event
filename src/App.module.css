@@ -39,7 +39,7 @@
   }
 }
 
-@font-face {
+/* @font-face {
   font-family: 'Halvar_medium';
   src: url('./assets/fonts/Halvar\ Breitschrift/Halvar Breitschrift Medium.ttf')
     format('truetype');
@@ -53,7 +53,7 @@
     format('truetype');
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 @font-face {
   font-family: 'Halvar';
@@ -62,7 +62,7 @@
   font-weight: lighter;
 }
 
-@font-face {
+/* @font-face {
   font-family: 'PT_Root_UI_medium';
   src: url('./assets/fonts/PT\ Root\ UI/PT Root UI_Medium.ttf')
     format('truetype');
@@ -82,4 +82,4 @@
     format('truetype');
   font-weight: normal;
   font-style: normal;
-}
+} */
