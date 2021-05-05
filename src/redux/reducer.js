@@ -1,4 +1,4 @@
-import serverAPI from '../serverAPI/serverAPI';
+import api from '../api';
 import store from './store';
 
 const SET_AUTH = 'SET_AUTH';
@@ -147,7 +147,7 @@ export const setListStatus = (isListComplete) => ({
 export const login = (email, password) => (dispatch) => {
   dispatch(setServerErrorMessage(''));
   dispatch(serverInProgress(true));
-  serverAPI.auth(email, password).then((response) => {
+  api.auth(email, password).then((response) => {
     switch (response.status) {
       case 200: {
         dispatch(setToken(response.data.token));
@@ -175,7 +175,7 @@ export const login = (email, password) => (dispatch) => {
 export const getListEventsDate = () => (dispatch) => {
   dispatch(setListStatus(false));
   dispatch(serverInProgress(true));
-  serverAPI.getList(store.getState().reducer.token).then((response) => {
+  api.getList(store.getState().reducer.token).then((response) => {
     switch (response.status) {
       case 200: {
         dispatch(setEventsDate(response.data.eventsDate));
@@ -226,7 +226,7 @@ export const sendResultForm = (completedForm) => (dispatch) => {
     eventId: event.id,
     ...opts,
   };
-  serverAPI.postForm(store.getState().reducer.token, form).then((response) => {
+  api.postForm(store.getState().reducer.token, form).then((response) => {
     switch (response.status) {
       case 200: {
         dispatch(setCompletedForm(completedForm));
