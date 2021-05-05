@@ -1,0 +1,30 @@
+{
+  "files": {
+    "main.css": "/mega-event/static/css/main.618fa7f4.chunk.css",
+    "main.js": "/mega-event/static/js/main.c5af4dcc.chunk.js",
+    "main.js.map": "/mega-event/static/js/main.c5af4dcc.chunk.js.map",
+    "runtime-main.js": "/mega-event/static/js/runtime-main.bff137bb.js",
+    "runtime-main.js.map": "/mega-event/static/js/runtime-main.bff137bb.js.map",
+    "static/js/2.4868cc70.chunk.js": "/mega-event/static/js/2.4868cc70.chunk.js",
+    "static/js/2.4868cc70.chunk.js.map": "/mega-event/static/js/2.4868cc70.chunk.js.map",
+    "static/js/3.1cbe5062.chunk.js": "/mega-event/static/js/3.1cbe5062.chunk.js",
+    "static/js/3.1cbe5062.chunk.js.map": "/mega-event/static/js/3.1cbe5062.chunk.js.map",
+    "index.html": "/mega-event/index.html",
+    "static/css/main.618fa7f4.chunk.css.map": "/mega-event/static/css/main.618fa7f4.chunk.css.map",
+    "static/js/2.4868cc70.chunk.js.LICENSE.txt": "/mega-event/static/js/2.4868cc70.chunk.js.LICENSE.txt",
+    "static/media/App.module.css": "/mega-event/static/media/PT Root UI_Regular.b9c24cda.ttf",
+    "static/media/arrowDropDown.a23ac2ef.svg": "/mega-event/static/media/arrowDropDown.a23ac2ef.svg",
+    "static/media/arrowDropUp.bf081132.svg": "/mega-event/static/media/arrowDropUp.bf081132.svg",
+    "static/media/checkboxOff.600b40e8.svg": "/mega-event/static/media/checkboxOff.600b40e8.svg",
+    "static/media/checkboxOn.329474b4.svg": "/mega-event/static/media/checkboxOn.329474b4.svg",
+    "static/media/eyeClosed.0e32c567.svg": "/mega-event/static/media/eyeClosed.0e32c567.svg",
+    "static/media/eyeOpenActive.5189878d.svg": "/mega-event/static/media/eyeOpenActive.5189878d.svg",
+    "static/media/eyeOpenDisabled.7317f907.svg": "/mega-event/static/media/eyeOpenDisabled.7317f907.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.bff137bb.js",
+    "static/js/2.4868cc70.chunk.js",
+    "static/css/main.618fa7f4.chunk.css",
+    "static/js/main.c5af4dcc.chunk.js"
+  ]
+}
