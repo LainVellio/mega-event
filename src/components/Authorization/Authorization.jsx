@@ -18,21 +18,21 @@ class Authorization extends React.Component {
     inputs: [
       {
         id: 0,
-        value: '',
-        placeholder: 'E-mail',
-        type: 'text',
-        validate: [required, email],
         isValidate: true,
       },
       {
         id: 1,
-        value: '',
-        placeholder: 'Пароль',
-        type: 'password',
-        validate: [required],
         isValidate: true,
       },
     ],
+    email: {
+      value: "",
+      isValidated: false,
+    },
+    password: {
+      value: "",
+      isValidated: false,
+    }
   };
 
   componentDidMount() {
@@ -93,20 +93,25 @@ class Authorization extends React.Component {
             <div className={styles.email}>
               <Input
                 disabled={this.isDisabledInput()}
-                key={this.state.inputs[0].id}
-                {...this.state.inputs[0]}
+                placeholder='E-mail'
+                type='text'
+                validate={[required, email]}
                 onChange={this.onChange}
                 setValidate={this.setValidate}
-              />
+                value={this.state.inputs[0].value}
+                />
             </div>
 
             <div>
               <Input
+                id={1}
                 disabled={this.isDisabledInput()}
-                key={this.state.inputs[1].id}
-                {...this.state.inputs[1]}
+                placeholder="Пароль"
+                type='password'
+                validate={[required]}
                 onChange={this.onChange}
                 setValidate={this.setValidate}
+                value={this.state.inputs[1].value}
               />
               <div className={styles.serverError}>
                 {this.props.serverErrorMessage}
