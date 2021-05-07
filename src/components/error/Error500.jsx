@@ -1,8 +1,11 @@
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import Button from '../common/forms/button';
-import styles from './error500.module.css';
+
 import { setError500 } from '../../redux/reducer';
+
+import Button from '../common/forms/Button';
+
+import styles from './Error500.module.css';
 
 const Error500 = (props) => {
   const onClick = () => {

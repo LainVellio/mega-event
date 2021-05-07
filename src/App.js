@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
+
+import Authorization from './components/authorization/Authorization';
+import Questionary from './components/questionary/Questionary';
+import FinalPage from './components/final/FinalPage';
+import Error500 from './components/error/Error500';
 
 import commonStyles from './App.module.css';
-import Authorization from './components/authorization/authorization';
-import Questionary from './components/questionary/questionary';
-import FinalPage from './components/final/finalPage';
-import Error500 from './components/error/error500';
-import { connect } from 'react-redux';
 
 const App = (props) => {
   return (

@@ -1,4 +1,4 @@
-import cl from './preloader.module.css';
+import cl from './Preloader.module.css';
 
 const Preloader = (props) => (
   <div className={cl.lds_roller}>

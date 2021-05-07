@@ -2,14 +2,12 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-import { login } from '../../redux/reducer';
-import { email, required } from '../common/validators/validators';
-
 import InputField from '../common/forms/InputField';
 import Button from '../common/forms/Button';
-
+import { login, setServerErrorMessage } from '../../redux/reducer';
 import commonStyles from '../../App.module.css';
-import styles from './Authorization.module.css';
+import styles from './authorization.module.css';
+import { email, required } from '../common/validators/validators';
 
 const Authorization = (props) => {
   const [logInData, setLogInData] = useState({ email: '', password: '' });
@@ -18,17 +16,17 @@ const Authorization = (props) => {
     password: false,
   });
 
-  const handleChange = (fieldName) => (fieldValue) => {
-    setLogInData({
-      ...logInData,
-      [fieldName]: fieldValue,
-    });
-  };
-
   const handleValidate = (fieldName) => (isValidateField) => {
     setInputValidate({
       ...inputValidate,
       [fieldName]: isValidateField,
+    });
+  };
+
+  const handleChange = (fieldName) => (fieldValue) => {
+    setLogInData({
+      ...logInData,
+      [fieldName]: fieldValue,
     });
   };
 
@@ -46,6 +44,10 @@ const Authorization = (props) => {
     return false;
   };
 
+  const isDisabledInput = () => {
+    return props.isServerProgress;
+  };
+
   return (
     <div>
       {props.isAuth && <Redirect to="/questionary" />}
@@ -60,8 +62,7 @@ const Authorization = (props) => {
               value={logInData.email}
               onChange={handleChange('email')}
               validate={handleValidate('email')}
-              disabled={props.isServerProgress}
-              mask={false}
+              disabled={isDisabledInput()}
             />
           </div>
 
@@ -73,8 +74,7 @@ const Authorization = (props) => {
               value={logInData.password}
               onChange={handleChange('password')}
               validate={handleValidate('password')}
-              disabled={props.isServerProgress}
-              mask={false}
+              disabled={isDisabledInput()}
             />
             <div className={styles.serverError}>{props.serverErrorMessage}</div>
           </div>
@@ -91,4 +91,6 @@ const mapStateToProps = (state) => ({
   serverErrorMessage: state.reducer.serverErrorMessage,
 });
 
-export default connect(mapStateToProps, { login })(Authorization);
+export default connect(mapStateToProps, { login, setServerErrorMessage })(
+  Authorization,
+);
