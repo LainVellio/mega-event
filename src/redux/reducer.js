@@ -251,7 +251,6 @@ export const sendResultForm = (data) => (dispatch) => {
     : null;
 
   const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
-  console.log(form);
 
   api.postForm(store.getState().reducer.token, form).then((response) => {
     if (response === undefined) {

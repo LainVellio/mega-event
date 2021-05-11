@@ -9,8 +9,7 @@ export const email = (value) => {
   return 'Неверный Email';
 };
 
-export const tel = (value) => {
-  const re = /\+7\d{10}/;
-  if (re.test(value)) return undefined;
-  return 'Некорректный телефон';
+export const minLength = (minLength) => (value) => {
+  if (value.replace(/_/g, '').length >= minLength) return undefined;
+  return 'Поле заполненно не полностью';
 };

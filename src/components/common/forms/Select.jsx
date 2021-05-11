@@ -11,15 +11,15 @@ const Select = ({ eventsDate, selectEventDate, onSelect, disabled }) => {
     setIsOpen({ isOpen: !isOpen });
   };
 
-  const Field = (eventDate) => {
+  const Field = (props) => {
     const onClickDate = () => {
       setIsOpen(false);
-      onSelect(eventDate.id);
+      onSelect(props.id);
     };
     return (
       <div className={styles.input}>
         <div onClick={onClickDate} className={`${styles.date}`}>
-          {eventDate.label}
+          {props.label}
         </div>
       </div>
     );

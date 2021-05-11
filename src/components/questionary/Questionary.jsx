@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
 import { getListEventsDate, sendResultForm } from '../../redux/reducer';
-import { required } from '../common/validators/validators';
+import { minLength, required } from '../common/validators/validators';
 
 import Checkbox from '../common/forms/Checkbox';
 import InputField from '../common/forms/InputField';
@@ -54,6 +54,8 @@ const Questionary = (props) => {
       [fieldName]: isValidateField,
     });
   };
+  const minLengthBirthday = minLength(10);
+  const minLengthPhone = minLength(16);
 
   const onChecked = (checkboxName) => () => {
     setData({
@@ -145,7 +147,7 @@ const Questionary = (props) => {
                       <InputField
                         type="text"
                         placeholder="Дата рождения"
-                        validators={[required]}
+                        validators={[required, minLengthBirthday]}
                         value={data.birthday}
                         disabled={props.isServerProgress}
                         onChange={handleChange('birthday')}
@@ -168,7 +170,7 @@ const Questionary = (props) => {
                       <InputField
                         type="text"
                         placeholder="Номер телефона"
-                        validators={[required]}
+                        validators={[required, minLengthPhone]}
                         value={data.phone}
                         disabled={props.isServerProgress}
                         onChange={handleChange('phone')}
@@ -228,7 +230,7 @@ const Questionary = (props) => {
                       <InputField
                         type="text"
                         placeholder="Номер телефона"
-                        validators={[required]}
+                        validators={[required, minLengthPhone]}
                         value={data.phone}
                         disabled={props.isServerProgress}
                         onChange={handleChange('phone')}

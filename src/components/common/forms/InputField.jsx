@@ -49,7 +49,6 @@ const InputField = ({
 
   const onMouseUpEye = () => {
     setIsPasswordVisible(false);
-    console.log(inputRef.current.inputElement);
     inputRef.current.inputElement.focus();
   };
 
