@@ -1,19 +1,19 @@
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 
-import { setError500 } from '../../redux/reducer';
+import { setError500 } from '../../redux/mainReducer';
 
 import Button from '../common/forms/Button';
 
 import styles from './Error500.module.css';
 
-const Error500 = (props) => {
+const Error500 = ({ setError500, isError500 }) => {
   const onClick = () => {
-    props.setError500(false);
+    setError500(false);
   };
   return (
     <div>
-      {!props.isError500 && <Redirect to="/questionary" />}
+      {!isError500 && <Redirect to="/questionary" />}
       <div className={styles.blockError}>Ошибка сервера</div>
       <Button onClick={onClick}>Попробовать ещё раз</Button>
     </div>

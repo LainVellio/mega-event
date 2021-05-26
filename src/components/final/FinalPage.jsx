@@ -6,14 +6,14 @@ import Button from '../common/forms/Button';
 import commonStyles from '../../App.module.css';
 import styles from './FinalPage.module.css';
 
-const FinalPage = (props) => {
+const FinalPage = ({ completedForm, isAuth, isError500 }) => {
   const [isRedirect, setIsRedirect] = useState(false);
 
   const onRedirect = () => {
     setIsRedirect(true);
   };
 
-  const result = props.completedForm;
+  const result = completedForm;
   const Item = (props) => (
     <div className={styles.item}>
       <div className={styles.label}>{props.label}</div>
@@ -23,11 +23,11 @@ const FinalPage = (props) => {
 
   return (
     <div className={styles.container}>
-      {!props.isAuth ? (
+      {!isAuth ? (
         <Redirect to="/login" />
       ) : (
         <div>
-          {props.isError500 && <Redirect to="/error" />}
+          {isError500 && <Redirect to="/error" />}
           {isRedirect && <Redirect to="/questionary" />}
           <h1 className={commonStyles.h1}>Спасибо за заявку!</h1>
           <div className={styles.result}>

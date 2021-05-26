@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
-import { getListEventsDate, sendResultForm } from '../../redux/reducer';
+import { getListEventsDate, sendResultForm } from '../../redux/mainReducer';
 import { minLength, required } from '../common/validators/validators';
 
 import Checkbox from '../common/forms/Checkbox';
@@ -14,7 +14,16 @@ import Preloader from '../common/preloader/Preloader';
 import commonStyles from '../../App.module.css';
 import styles from './Questionary.module.css';
 
-const Questionary = (props) => {
+const Questionary = ({
+  isAuth,
+  eventsDate,
+  sendResultForm,
+  isError500,
+  isListComplete,
+  isComplete,
+  getListEventsDate,
+  isServerProgress,
+}) => {
   const [data, setData] = useState({
     fullName: '',
     birthday: '',
@@ -38,8 +47,8 @@ const Questionary = (props) => {
   });
 
   useEffect(() => {
-    props.getListEventsDate();
-  }, [props.isAuth]);
+    getListEventsDate();
+  }, [getListEventsDate, isAuth]);
 
   const handleChange = (fieldName) => (fieldValue) => {
     setData({
@@ -74,21 +83,17 @@ const Questionary = (props) => {
   const onSelect = (id) => {
     setData({
       ...data,
-      selectEventDate: props.eventsDate.find((i) => i.id === id),
+      selectEventDate: eventsDate.find((i) => i.id === id),
     });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.sendResultForm(data);
+    sendResultForm(data);
   };
 
   const isDisabledButton = () => {
-    if (
-      props.isServerProgress ||
-      !inputValidate.phone ||
-      !data.selectEventDate.id
-    )
+    if (isServerProgress || !inputValidate.phone || !data.selectEventDate.id)
       return true;
     else
       return data.switch
@@ -98,16 +103,16 @@ const Questionary = (props) => {
 
   return (
     <div className={styles.container}>
-      {!props.isAuth && <Redirect to="/login" />}
-      {props.isError500 && <Redirect to="/error" />}
-      {!props.isListComplete ? (
+      {!isAuth && <Redirect to="/login" />}
+      {isError500 && <Redirect to="/error" />}
+      {!isListComplete ? (
         <Preloader />
       ) : (
         <div>
           <h1 className={commonStyles.h1}>Заполните анкету участника</h1>
           <div
             className={`${styles.switch} ${
-              props.isServerProgress ? styles.switchDisabled : ''
+              isServerProgress ? styles.switchDisabled : ''
             }`}
           >
             <Button
@@ -137,7 +142,7 @@ const Questionary = (props) => {
                         placeholder="ФИО"
                         validators={[required]}
                         value={data.fullName}
-                        disabled={props.isServerProgress}
+                        disabled={isServerProgress}
                         onChange={handleChange('fullName')}
                         validate={handleValidate('fullName')}
                         mask={false}
@@ -149,7 +154,7 @@ const Questionary = (props) => {
                         placeholder="Дата рождения"
                         validators={[required, minLengthBirthday]}
                         value={data.birthday}
-                        disabled={props.isServerProgress}
+                        disabled={isServerProgress}
                         onChange={handleChange('birthday')}
                         validate={handleValidate('birthday')}
                         mask={[
@@ -172,7 +177,7 @@ const Questionary = (props) => {
                         placeholder="Номер телефона"
                         validators={[required, minLengthPhone]}
                         value={data.phone}
-                        disabled={props.isServerProgress}
+                        disabled={isServerProgress}
                         onChange={handleChange('phone')}
                         validate={handleValidate('phone')}
                         mask={[
@@ -207,7 +212,7 @@ const Questionary = (props) => {
                         placeholder="Название компании"
                         validators={[required]}
                         value={data.companyName}
-                        disabled={props.isServerProgress}
+                        disabled={isServerProgress}
                         onChange={handleChange('companyName')}
                         validate={handleValidate('companyName')}
                         mask={false}
@@ -220,7 +225,7 @@ const Questionary = (props) => {
                         placeholder="Ваша должность"
                         validators={[required]}
                         value={data.position}
-                        disabled={props.isServerProgress}
+                        disabled={isServerProgress}
                         onChange={handleChange('position')}
                         validate={handleValidate('position')}
                         mask={false}
@@ -232,7 +237,7 @@ const Questionary = (props) => {
                         placeholder="Номер телефона"
                         validators={[required, minLengthPhone]}
                         value={data.phone}
-                        disabled={props.isServerProgress}
+                        disabled={isServerProgress}
                         onChange={handleChange('phone')}
                         validate={handleValidate('phone')}
                         mask={[
@@ -269,29 +274,29 @@ const Questionary = (props) => {
                   <h2 className={commonStyles.h2}>Выберите дату мероприятия</h2>
                   <div className={styles.select}>
                     <Select
-                      eventsDate={props.eventsDate}
+                      eventsDate={eventsDate}
                       selectEventDate={data.selectEventDate.label}
                       onSelect={onSelect}
-                      disabled={props.isServerProgress}
+                      disabled={isServerProgress}
                     />
                   </div>
                   <div className={styles.checkboxBlock}>
                     <Checkbox
                       label="Нужна парковка"
                       checked={data.parkingCheckbox}
-                      disabled={props.isServerProgress}
+                      disabled={isServerProgress}
                       onClick={onChecked('parkingCheckbox')}
                     />
                     <Checkbox
                       label="Хочу получить раздаточный материал"
-                      disabled={props.isServerProgress}
+                      disabled={isServerProgress}
                       checked={data.handoutsCheckbox}
                       onClick={onChecked('handoutsCheckbox')}
                     />
                     <Checkbox
                       label="Нужна помощь сопровождающего"
                       checked={data.needHelpCheckbox}
-                      disabled={props.isServerProgress}
+                      disabled={isServerProgress}
                       onClick={onChecked('needHelpCheckbox')}
                     />
                   </div>
@@ -300,7 +305,7 @@ const Questionary = (props) => {
             </div>
             <Button disabled={isDisabledButton()}>Отправить заявку</Button>
           </form>
-          {props.isComplete && <Redirect to="/result" />}
+          {isComplete && <Redirect to="/result" />}
         </div>
       )}
     </div>
