@@ -150,21 +150,20 @@ export const setListStatus = (isListComplete) => ({
   isListComplete,
 });
 
-export const login = (email, password) => (dispatch) => {
-  dispatch(setServerErrorMessage(''));
-  dispatch(serverInProgress(true));
-  api.auth(email, password).then((response) => {
-    if (response === undefined) {
+export const login = (email, password) => async (dispatch) => {
+  try {
+    dispatch(setServerErrorMessage(''));
+    dispatch(serverInProgress(true));
+    const response = await api.auth(email, password);
+    dispatch(setToken(response.data.token));
+    dispatch(authMe(true));
+  } catch (error) {
+    if (error.response === undefined) {
       dispatch(serverInProgress(false));
       dispatch(authMe(true));
       return;
     }
-    switch (response.status) {
-      case 200: {
-        dispatch(setToken(response.data.token));
-        dispatch(authMe(true));
-        break;
-      }
+    switch (error.response.status) {
       case 400: {
         dispatch(setServerErrorMessage('Неверный email или пароль'));
         break;
@@ -179,25 +178,24 @@ export const login = (email, password) => (dispatch) => {
         break;
       }
     }
-    dispatch(serverInProgress(false));
-  });
+  }
+  dispatch(serverInProgress(false));
 };
 
-export const getListEventsDate = () => (dispatch) => {
-  dispatch(setListStatus(false));
-  dispatch(serverInProgress(true));
-  api.getList(store.getState().reducer.token).then((response) => {
-    if (response === undefined) {
+export const getListEventsDate = () => async (dispatch) => {
+  try {
+    dispatch(setListStatus(false));
+    dispatch(serverInProgress(true));
+    const response = await api.getList(store.getState().reducer.token);
+    dispatch(setEventsDate(response.data.eventsDate));
+    dispatch(setListStatus(true));
+  } catch (error) {
+    if (error.response === undefined) {
       dispatch(setListStatus(true));
       dispatch(serverInProgress(false));
       return;
     }
-    switch (response.status) {
-      case 200: {
-        dispatch(setEventsDate(response.data.eventsDate));
-        dispatch(setListStatus(true));
-        break;
-      }
+    switch (error.response.status) {
       case 401: {
         dispatch(setServerErrorMessage('Ошибка авторизации'));
         dispatch(setToken(''));
@@ -216,57 +214,56 @@ export const getListEventsDate = () => (dispatch) => {
         break;
       }
     }
-    dispatch(serverInProgress(false));
-  });
+  }
+  dispatch(serverInProgress(false));
 };
 
-export const sendResultForm = (data) => (dispatch) => {
-  dispatch(serverInProgress(true));
-  const commonData = {
-    phone: data.phone,
-    eventId: data.selectEventDate.id,
-  };
-  const specialData = data.switch
-    ? {
-        name: data.fullName,
-        dob: data.birthday,
-      }
-    : {
-        cName: data.companyName,
-        pos: data.position,
-      };
-  const opt1 = data.parkingCheckbox
-    ? {
-        opt1: 1,
-      }
-    : null;
-  const opt2 = data.handoutsCheckbox
-    ? {
-        opt2: 1,
-      }
-    : null;
-  const opt3 = data.needHelpCheckbox
-    ? {
-        opt3: 1,
-      }
-    : null;
+export const sendResultForm = (data) => async (dispatch) => {
+  try {
+    dispatch(serverInProgress(true));
+    const commonData = {
+      phone: data.phone,
+      eventId: data.selectEventDate.id,
+    };
+    const specialData = data.switch
+      ? {
+          name: data.fullName,
+          dob: data.birthday,
+        }
+      : {
+          cName: data.companyName,
+          pos: data.position,
+        };
+    const opt1 = data.parkingCheckbox
+      ? {
+          opt1: 1,
+        }
+      : null;
+    const opt2 = data.handoutsCheckbox
+      ? {
+          opt2: 1,
+        }
+      : null;
+    const opt3 = data.needHelpCheckbox
+      ? {
+          opt3: 1,
+        }
+      : null;
 
-  const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
+    const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
 
-  api.postForm(store.getState().reducer.token, form).then((response) => {
-    if (response === undefined) {
+    await api.postForm(store.getState().reducer.token, form);
+    dispatch(setCompletedForm(data));
+    dispatch(setComplete(true));
+  } catch (error) {
+    if (error.response === undefined) {
       dispatch(setCompletedForm(data));
       dispatch(setComplete(true));
       dispatch(serverInProgress(false));
       dispatch(setComplete(false));
       return;
     }
-    switch (response.status) {
-      case 200: {
-        dispatch(setCompletedForm(data));
-        dispatch(setComplete(true));
-        break;
-      }
+    switch (error.response.status) {
       case 401: {
         dispatch(setServerErrorMessage('Ошибка авторизации'));
         dispatch(setToken(''));
@@ -285,9 +282,9 @@ export const sendResultForm = (data) => (dispatch) => {
         break;
       }
     }
-    dispatch(setComplete(false));
-    dispatch(serverInProgress(false));
-  });
+  }
+  dispatch(setComplete(false));
+  dispatch(serverInProgress(false));
 };
 
 export default reducer;

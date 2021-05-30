@@ -48,7 +48,7 @@ const Authorization = ({
 
   const isButtonDisabled = () => {
     if (isServerProgress) return true;
-    return Object.values(isInputByValidate).every((i) => i);
+    return !Object.values(isInputByValidate).every((i) => i);
   };
 
   return (

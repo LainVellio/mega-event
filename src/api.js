@@ -11,9 +11,7 @@ const serverAPI = {
       url: AUTH_URL,
       headers: { 'Content-Type': 'application/json' },
       data: { username: email, password: password },
-    })
-      .then((response) => response)
-      .catch((error) => error.response);
+    });
   },
 
   getList(token) {
@@ -21,9 +19,7 @@ const serverAPI = {
       method: 'get',
       url: LIST_URL,
       headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((response) => response)
-      .catch((error) => error.response);
+    });
   },
 
   postForm(token, form) {
@@ -35,9 +31,7 @@ const serverAPI = {
         'Content-Type': 'application/json',
       },
       data: form,
-    })
-      .then((response) => response)
-      .catch((error) => error.response);
+    });
   },
 };
 
