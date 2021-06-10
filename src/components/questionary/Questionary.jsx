@@ -51,6 +51,7 @@ const Questionary = ({
   }, [getListEventsDate, isAuth]);
 
   const handleChange = (fieldName) => (fieldValue) => {
+    console.log(fieldValue);
     setData({
       ...data,
       [fieldName]: fieldValue,
@@ -133,137 +134,112 @@ const Questionary = ({
           <form onSubmit={handleSubmit}>
             <div className={styles.questionary}>
               <div className={styles.personalDataLeft}>
-                {data.switch ? (
-                  <div>
-                    <h2 className={commonStyles.h2}>Личные данные</h2>
-                    <div className={styles.input}>
-                      <InputField
-                        type="text"
-                        placeholder="ФИО"
-                        validators={[required]}
-                        value={data.fullName}
-                        disabled={isServerProgress}
-                        onChange={handleChange('fullName')}
-                        validate={handleValidate('fullName')}
-                        mask={false}
-                      />
-                    </div>
-                    <div className={styles.input}>
-                      <InputField
-                        type="text"
-                        placeholder="Дата рождения"
-                        validators={[required, minLengthBirthday]}
-                        value={data.birthday}
-                        disabled={isServerProgress}
-                        onChange={handleChange('birthday')}
-                        validate={handleValidate('birthday')}
-                        mask={[
-                          /[0-3]/,
-                          /\d/,
-                          '.',
-                          /[0-1]/,
-                          /\d/,
-                          '.',
-                          /[1-2]/,
-                          /[09]/,
-                          /\d/,
-                          /\d/,
-                        ]}
-                      />
-                    </div>
-                    <div className={styles.input}>
-                      <InputField
-                        type="text"
-                        placeholder="Номер телефона"
-                        validators={[required, minLengthPhone]}
-                        value={data.phone}
-                        disabled={isServerProgress}
-                        onChange={handleChange('phone')}
-                        validate={handleValidate('phone')}
-                        mask={[
-                          '+',
-                          '7',
-                          ' ',
-                          '(',
-                          /[1-9]/,
-                          /\d/,
-                          /\d/,
-                          ')',
-                          ' ',
-                          /\d/,
-                          /\d/,
-                          /\d/,
-                          '-',
-                          /\d/,
-                          /\d/,
-                          '-',
-                          /\d/,
-                          /\d/,
-                        ]}
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div>
-                    <h2 className={commonStyles.h2}>Личные данные</h2>
-                    <div className={styles.input}>
-                      <InputField
-                        type="text"
-                        placeholder="Название компании"
-                        validators={[required]}
-                        value={data.companyName}
-                        disabled={isServerProgress}
-                        onChange={handleChange('companyName')}
-                        validate={handleValidate('companyName')}
-                        mask={false}
-                      />
-                    </div>
+                <h2 className={commonStyles.h2}>Личные данные</h2>
 
-                    <div className={styles.input}>
-                      <InputField
-                        type="text"
-                        placeholder="Ваша должность"
-                        validators={[required]}
-                        value={data.position}
-                        disabled={isServerProgress}
-                        onChange={handleChange('position')}
-                        validate={handleValidate('position')}
-                        mask={false}
-                      />
-                    </div>
-                    <div className={styles.input}>
-                      <InputField
-                        type="text"
-                        placeholder="Номер телефона"
-                        validators={[required, minLengthPhone]}
-                        value={data.phone}
-                        disabled={isServerProgress}
-                        onChange={handleChange('phone')}
-                        validate={handleValidate('phone')}
-                        mask={[
-                          '+',
-                          '7',
-                          ' ',
-                          '(',
-                          /[1-9]/,
-                          /\d/,
-                          /\d/,
-                          ')',
-                          ' ',
-                          /\d/,
-                          /\d/,
-                          /\d/,
-                          '-',
-                          /\d/,
-                          /\d/,
-                          '-',
-                          /\d/,
-                          /\d/,
-                        ]}
-                      />
-                    </div>
+                <div>
+                  <div
+                    className={data.switch ? styles.input : styles.inputHidden}
+                  >
+                    <InputField
+                      type="text"
+                      placeholder="ФИО"
+                      validators={[required]}
+                      value={data.fullName}
+                      disabled={isServerProgress}
+                      onChange={handleChange('fullName')}
+                      validate={handleValidate('fullName')}
+                      mask={false}
+                    />
                   </div>
-                )}
+                  <div
+                    className={data.switch ? styles.input : styles.inputHidden}
+                  >
+                    <InputField
+                      type="text"
+                      placeholder="Дата рождения"
+                      validators={[required, minLengthBirthday]}
+                      value={data.birthday}
+                      disabled={isServerProgress}
+                      onChange={handleChange('birthday')}
+                      validate={handleValidate('birthday')}
+                      mask={[
+                        /[0-3]/,
+                        /\d/,
+                        '.',
+                        /[0-1]/,
+                        /\d/,
+                        '.',
+                        /[1-2]/,
+                        /[09]/,
+                        /\d/,
+                        /\d/,
+                      ]}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div
+                    className={!data.switch ? styles.input : styles.inputHidden}
+                  >
+                    <InputField
+                      type="text"
+                      placeholder="Название компании"
+                      validators={[required]}
+                      value={data.companyName}
+                      disabled={isServerProgress}
+                      onChange={handleChange('companyName')}
+                      validate={handleValidate('companyName')}
+                      mask={false}
+                    />
+                  </div>
+
+                  <div
+                    className={!data.switch ? styles.input : styles.inputHidden}
+                  >
+                    <InputField
+                      type="text"
+                      placeholder="Ваша должность"
+                      validators={[required]}
+                      value={data.position}
+                      disabled={isServerProgress}
+                      onChange={handleChange('position')}
+                      validate={handleValidate('position')}
+                      mask={false}
+                    />
+                  </div>
+                  <div className={styles.input}>
+                    <InputField
+                      type="text"
+                      placeholder="Номер телефона"
+                      validators={[required, minLengthPhone]}
+                      value={data.phone}
+                      disabled={isServerProgress}
+                      onChange={handleChange('phone')}
+                      validate={handleValidate('phone')}
+                      mask={[
+                        '+',
+                        '7',
+                        ' ',
+                        '(',
+                        /[1-9]/,
+                        /\d/,
+                        /\d/,
+                        ')',
+                        ' ',
+                        /\d/,
+                        /\d/,
+                        /\d/,
+                        '-',
+                        /\d/,
+                        /\d/,
+                        '-',
+                        /\d/,
+                        /\d/,
+                      ]}
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className={styles.dividerLeft}></div>

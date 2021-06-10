@@ -59,9 +59,9 @@ const InputField = ({
       return eyeClosed;
     } else return eyeOpenActive;
   };
-
   return (
     <div className={styles.inputBlock}>
+      {console.log('value', value)}
       <div
         className={`${styles.input} ${
           isFocused && !disabled && styles.selected
@@ -79,7 +79,9 @@ const InputField = ({
           }
           placeholder={placeholder}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => {
+            onChange(e.target.value);
+          }}
           onFocus={onFocus}
           onBlur={onBlur}
           disabled={disabled}
