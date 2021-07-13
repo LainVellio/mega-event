@@ -1,6 +1,6 @@
 {
   "name": "mega-event",
-  "homepage": "https://lainvellio.github.io/mega-event/",
+  "homepage": "https://vellio-mega-event-react.herokuapp.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
