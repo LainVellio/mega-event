@@ -44,33 +44,35 @@ export const initialResultForm: ResultForm = {
   switch: true,
 };
 
+const initialEventsDate: Array<EventDate> = [
+  {
+    id: 1,
+    label: '24 апреля 2021 года',
+  },
+  {
+    id: 2,
+    label: '3 мая 2021 года',
+  },
+  {
+    id: 3,
+    label: '20 июня 2021 года',
+  },
+  {
+    id: 4,
+    label: '10 августа 2021 года',
+  },
+  {
+    id: 5,
+    label: '15 мая 2022 года',
+  },
+];
+
 const App = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState('');
   const [isServerProgress, setIsServerProgress] = useState(false);
-  const [resultForm, setResultForm] = useState<ResultForm>(initialResultForm);
-  const [eventsDate, setEventsDate] = useState([
-    {
-      id: 1,
-      label: '24 апреля 2021 года',
-    },
-    {
-      id: 2,
-      label: '3 мая 2021 года',
-    },
-    {
-      id: 3,
-      label: '20 июня 2021 года',
-    },
-    {
-      id: 4,
-      label: '10 августа 2021 года',
-    },
-    {
-      id: 5,
-      label: '15 мая 2022 года',
-    },
-  ]);
+  const [resultForm, setResultForm] = useState(initialResultForm);
+  const [eventsDate, setEventsDate] = useState(initialEventsDate);
   const [serverErrorMessage, setServerErrorMessage] = useState('');
   const [isComplete, setIsComplete] = useState(false);
   const [isListComplete, setListStatus] = useState(false);
