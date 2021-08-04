@@ -12,12 +12,19 @@ import Button from '../common/forms/Button';
 import commonStyles from '../../App.module.css';
 import styles from './Authorization.module.css';
 
+interface AuthorizationProps {
+  login: Function;
+  isServerProgress: boolean;
+  isAuth: boolean;
+  serverErrorMessage: string;
+}
+
 const Authorization = ({
   login,
   isServerProgress,
   isAuth,
   serverErrorMessage,
-}) => {
+}: AuthorizationProps) => {
   const [loginData, setLogInData] = useState({ email: '', password: '' });
   const [isInputByValidate, setInputValidate] = useState({
     email: false,
@@ -25,21 +32,21 @@ const Authorization = ({
   });
   const { email, password } = loginData;
 
-  const handleChange = (fieldName) => (fieldValue) => {
+  const handleChange = (fieldName: string) => (fieldValue: string) => {
     setLogInData({
       ...loginData,
       [fieldName]: fieldValue,
     });
   };
 
-  const handleValidate = (fieldName) => (isValidateField) => {
+  const handleValidate = (fieldName: string) => (isValidateField: string) => {
     setInputValidate({
       ...isInputByValidate,
       [fieldName]: isValidateField,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     login(email, password);
   };

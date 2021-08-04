@@ -10,11 +10,45 @@ import Error500 from './components/error/Error500';
 
 import commonStyles from './App.module.css';
 
-const App = (props) => {
+export interface EventDate {
+  id: number;
+  label: string;
+}
+
+export interface ResultForm {
+  fullName: string;
+  birthday: string;
+  companyName: string;
+  position: string;
+  phone: string;
+  selectEventDate: EventDate;
+  parkingCheckbox: boolean;
+  handoutsCheckbox: boolean;
+  needHelpCheckbox: boolean;
+  switch: boolean;
+}
+
+export const initialResultForm: ResultForm = {
+  fullName: '',
+  birthday: '',
+  companyName: '',
+  position: '',
+  phone: '',
+  selectEventDate: {
+    id: 0,
+    label: '',
+  },
+  parkingCheckbox: false,
+  handoutsCheckbox: false,
+  needHelpCheckbox: false,
+  switch: true,
+};
+
+const App = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState('');
   const [isServerProgress, setIsServerProgress] = useState(false);
-  const [completedForm, setCompletedForm] = useState(null);
+  const [resultForm, setResultForm] = useState<ResultForm>(initialResultForm);
   const [eventsDate, setEventsDate] = useState([
     {
       id: 1,
@@ -42,7 +76,7 @@ const App = (props) => {
   const [isListComplete, setListStatus] = useState(false);
   const [isError500, setError500] = useState(false);
 
-  const login = async (email, password) => {
+  const login = async (email: string, password: string) => {
     try {
       setServerErrorMessage('');
       setIsServerProgress(true);
@@ -110,7 +144,7 @@ const App = (props) => {
     setIsServerProgress(false);
   };
 
-  const sendResultForm = async (data) => {
+  const sendResultForm = async (data: ResultForm) => {
     try {
       setIsServerProgress(true);
       const commonData = {
@@ -145,11 +179,11 @@ const App = (props) => {
       const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
 
       await api.postForm(token, form);
-      setCompletedForm(data);
+      setResultForm(data);
       setIsComplete(true);
     } catch (error) {
       if (error.response === undefined) {
-        setCompletedForm(data);
+        setResultForm(data);
         setIsComplete(true);
         setIsServerProgress(false);
         setIsComplete(false);
@@ -177,11 +211,12 @@ const App = (props) => {
     }
     setIsComplete(false);
     setIsServerProgress(false);
+    setListStatus(false);
   };
 
   return (
     <BrowserRouter>
-      {props.isAuth ? <Redirect to="questionary" /> : <Redirect to="/login" />}
+      {isAuth ? <Redirect to="questionary" /> : <Redirect to="/login" />}
       <div>
         <header className={commonStyles.header}>Codding Mega Event</header>
         <Route
@@ -217,7 +252,7 @@ const App = (props) => {
           path="/result"
           render={() => (
             <FinalPage
-              completedForm={completedForm}
+              resultForm={resultForm}
               isAuth={isAuth}
               isError500={isError500}
             />

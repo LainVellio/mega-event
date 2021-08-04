@@ -4,19 +4,31 @@ import { Redirect } from 'react-router';
 import Button from '../common/forms/Button';
 import commonStyles from '../../App.module.css';
 import styles from './FinalPage.module.css';
+import { ResultForm } from '../../App';
 
-const FinalPage = ({ completedForm, isAuth, isError500 }) => {
+interface FinalPageProps {
+  resultForm: ResultForm;
+  isAuth: boolean;
+  isError500: boolean;
+}
+
+interface ItemProps {
+  label: string;
+  value: string;
+}
+
+const FinalPage = ({ resultForm, isAuth, isError500 }: FinalPageProps) => {
   const [isRedirect, setIsRedirect] = useState(false);
 
   const onRedirect = () => {
     setIsRedirect(true);
   };
 
-  const result = completedForm;
-  const Item = (props) => (
+  const result = resultForm;
+  const Item = ({ label, value }: ItemProps) => (
     <div className={styles.item}>
-      <div className={styles.label}>{props.label}</div>
-      <div className={styles.value}>{props.value}</div>
+      <div className={styles.label}>{label}</div>
+      <div className={styles.value}>{value}</div>
     </div>
   );
 

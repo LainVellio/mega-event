@@ -4,7 +4,12 @@ import Button from '../common/forms/Button';
 
 import styles from './Error500.module.css';
 
-const Error500 = ({ setError500, isError500 }) => {
+interface Error500Props {
+  setError500: Function;
+  isError500: boolean;
+}
+
+const Error500 = ({ setError500, isError500 }: Error500Props) => {
   const onClick = () => {
     setError500(false);
   };

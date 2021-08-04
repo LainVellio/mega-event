@@ -11,6 +11,20 @@ import Preloader from '../common/preloader/Preloader';
 
 import commonStyles from '../../App.module.css';
 import styles from './Questionary.module.css';
+import { EventDate, initialResultForm } from '../../App';
+
+type CheckboxName = 'parkingCheckbox' | 'handoutsCheckbox' | 'needHelpCheckbox';
+
+interface QuestionaryProps {
+  isAuth: boolean;
+  eventsDate: Array<EventDate>;
+  sendResultForm: Function;
+  isError500: boolean;
+  isListComplete: boolean;
+  isComplete: boolean;
+  getListEventsDate: Function;
+  isServerProgress: boolean;
+}
 
 const Questionary = ({
   isAuth,
@@ -21,19 +35,8 @@ const Questionary = ({
   isComplete,
   getListEventsDate,
   isServerProgress,
-}) => {
-  const [data, setData] = useState({
-    fullName: '',
-    birthday: '',
-    companyName: '',
-    position: '',
-    phone: '',
-    selectEventDate: {},
-    parkingCheckbox: false,
-    handoutsCheckbox: false,
-    needHelpCheckbox: false,
-    switch: true,
-  });
+}: QuestionaryProps) => {
+  const [data, setData] = useState(initialResultForm);
 
   const [inputValidate, setInputValidate] = useState({
     fullName: false,
@@ -41,21 +44,21 @@ const Questionary = ({
     birthday: false,
     companyName: false,
     position: false,
-    companyPhone: false,
+    phone: false,
   });
 
   useEffect(() => {
     getListEventsDate();
   }, [isAuth]);
 
-  const handleChange = (fieldName) => (fieldValue) => {
+  const handleChange = (fieldName: string) => (fieldValue: string) => {
     setData({
       ...data,
       [fieldName]: fieldValue,
     });
   };
 
-  const handleValidate = (fieldName) => (isValidateField) => {
+  const handleValidate = (fieldName: string) => (isValidateField: string) => {
     setInputValidate({
       ...inputValidate,
       [fieldName]: isValidateField,
@@ -64,7 +67,7 @@ const Questionary = ({
   const minLengthBirthday = minLength(10);
   const minLengthPhone = minLength(16);
 
-  const onChecked = (checkboxName) => () => {
+  const onChecked = (checkboxName: CheckboxName) => () => {
     setData({
       ...data,
       [checkboxName]: !data[checkboxName],
@@ -78,14 +81,15 @@ const Questionary = ({
     });
   };
 
-  const onSelect = (id) => {
+  const onSelect = (id: number) => {
     setData({
       ...data,
-      selectEventDate: eventsDate.find((i) => i.id === id),
+      selectEventDate:
+        eventsDate.find((i) => i.id === id) || data.selectEventDate,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     sendResultForm(data);
   };

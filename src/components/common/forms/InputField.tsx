@@ -1,10 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 
 import styles from './InputField.module.css';
 import eyeOpenDisabled from '../../../assets/images/eyeOpenDisabled.svg';
 import eyeOpenActive from '../../../assets/images/eyeOpenActive.svg';
 import eyeClosed from '../../../assets/images/eyeClosed.svg';
+
+interface InputFieldProps {
+  onChange: Function;
+  placeholder: string;
+  type: string;
+  value: string;
+  disabled: boolean;
+  validators: Array<Function>;
+  validate: Function;
+  mask: Array<RegExp | string> | false;
+}
 
 const InputField = ({
   type,
@@ -15,12 +26,12 @@ const InputField = ({
   onChange,
   validate,
   mask,
-}) => {
+}: InputFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
   const [error, setError] = useState(null);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const inputRef = useRef('input');
+  const inputRef = useRef<MaskedInput>(null);
 
   useEffect(() => {
     const checkValidate = () => {
@@ -34,7 +45,7 @@ const InputField = ({
     validators && checkValidate();
   }, [value, isFocused]);
 
-  const onFocus = (event) => {
+  const onFocus = () => {
     setIsFocused(true);
     setIsTouched(true);
   };
@@ -49,7 +60,7 @@ const InputField = ({
 
   const onMouseUpEye = () => {
     setIsPasswordVisible(false);
-    inputRef.current.inputElement.focus();
+    inputRef?.current?.inputElement.focus();
   };
 
   const onChangeEye = () => {
@@ -78,7 +89,7 @@ const InputField = ({
           }
           placeholder={placeholder}
           value={value}
-          onChange={(e) => {
+          onChange={(e: any) => {
             onChange(e.target.value);
           }}
           onFocus={onFocus}

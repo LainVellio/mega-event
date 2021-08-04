@@ -1,6 +1,10 @@
 import styles from './Button.module.css';
 
-const Button = ({ onClick, disabled, className, children }) => {
+interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+  disabled?: boolean;
+}
+
+const Button = ({ onClick, disabled, className, children }: ButtonProps) => {
   return (
     <button
       onClick={onClick}

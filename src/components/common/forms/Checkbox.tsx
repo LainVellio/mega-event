@@ -2,7 +2,13 @@ import styles from './Checkbox.module.css';
 import stateOn from '../../../assets/images/checkboxOn.svg';
 import stateOff from '../../../assets/images/checkboxOff.svg';
 
-const Checkbox = ({ onClick, disabled, checked, label }) => {
+interface CheckboxProps extends React.HTMLAttributes<HTMLDivElement> {
+  disabled: boolean;
+  checked: boolean;
+  label: string;
+}
+
+const Checkbox = ({ onClick, disabled, checked, label }: CheckboxProps) => {
   return (
     <div
       onClick={onClick}

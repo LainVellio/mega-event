@@ -3,15 +3,28 @@ import React, { useState } from 'react';
 import styles from './Select.module.css';
 import dropDown from '../../../assets/images/arrowDropDown.svg';
 import dropUp from '../../../assets/images/arrowDropUp.svg';
+import { EventDate } from '../../../App';
 
-const Select = ({ eventsDate, selectEventDate, onSelect, disabled }) => {
+interface SelectProps {
+  eventsDate: Array<EventDate>;
+  selectEventDate: string;
+  disabled: boolean;
+  onSelect: Function;
+}
+
+const Select = ({
+  eventsDate,
+  selectEventDate,
+  onSelect,
+  disabled,
+}: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onClickMain = () => {
-    setIsOpen({ isOpen: !isOpen });
+    setIsOpen(!isOpen);
   };
 
-  const Field = (props) => {
+  const Field = (props: EventDate) => {
     const onClickDate = () => {
       setIsOpen(false);
       onSelect(props.id);

@@ -1,3 +1,4 @@
+import { ResultForm } from './App';
 import axios from 'axios';
 
 const AUTH_URL = process.env.REACT_APP_AUTH_URL;
@@ -5,7 +6,7 @@ const LIST_URL = process.env.REACT_APP_LIST_URL;
 const REQUEST_URL = process.env.REACT_APP_REQUEST_URL;
 
 const serverAPI = {
-  auth(email, password) {
+  auth(email: string, password: string) {
     return axios({
       method: 'post',
       url: AUTH_URL,
@@ -14,7 +15,7 @@ const serverAPI = {
     });
   },
 
-  getList(token) {
+  getList(token: string) {
     return axios({
       method: 'get',
       url: LIST_URL,
@@ -22,7 +23,7 @@ const serverAPI = {
     });
   },
 
-  postForm(token, form) {
+  postForm(token: string, form: ResultForm) {
     return axios({
       method: 'post',
       url: REQUEST_URL,
