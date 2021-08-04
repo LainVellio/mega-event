@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useState } from 'react';
 import { Redirect } from 'react-router';
 
-import { login } from '../../redux/mainReducer';
 import {
   email as emailValidator,
   required,
@@ -90,10 +88,4 @@ const Authorization = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuth: state.reducer.isAuth,
-  isServerProgress: state.reducer.isServerProgress,
-  serverErrorMessage: state.reducer.serverErrorMessage,
-});
-
-export default connect(mapStateToProps, { login })(Authorization);
+export default Authorization;

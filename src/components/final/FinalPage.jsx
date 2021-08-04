@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useState } from 'react';
 import { Redirect } from 'react-router';
 
 import Button from '../common/forms/Button';
@@ -71,9 +70,4 @@ const FinalPage = ({ completedForm, isAuth, isError500 }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuth: state.reducer.isAuth,
-  completedForm: state.reducer.completedForm,
-});
-
-export default connect(mapStateToProps, {})(FinalPage);
+export default FinalPage;

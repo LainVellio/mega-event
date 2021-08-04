@@ -61,7 +61,6 @@ const InputField = ({
   };
   return (
     <div className={styles.inputBlock}>
-      {console.log('value', value)}
       <div
         className={`${styles.input} ${
           isFocused && !disabled && styles.selected

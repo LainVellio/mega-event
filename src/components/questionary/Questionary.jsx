@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Redirect } from 'react-router';
-import { connect } from 'react-redux';
 
-import { getListEventsDate, sendResultForm } from '../../redux/mainReducer';
 import { minLength, required } from '../common/validators/validators';
 
 import Checkbox from '../common/forms/Checkbox';
@@ -48,10 +46,9 @@ const Questionary = ({
 
   useEffect(() => {
     getListEventsDate();
-  }, [getListEventsDate, isAuth]);
+  }, [isAuth]);
 
   const handleChange = (fieldName) => (fieldValue) => {
-    console.log(fieldValue);
     setData({
       ...data,
       [fieldName]: fieldValue,
@@ -288,16 +285,4 @@ const Questionary = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  isAuth: state.reducer.isAuth,
-  eventsDate: state.reducer.eventsDate,
-  isComplete: state.reducer.isComplete,
-  isListComplete: state.reducer.isListComplete,
-  isError500: state.reducer.isError500,
-  isServerProgress: state.reducer.isServerProgress,
-});
-
-export default connect(mapStateToProps, {
-  sendResultForm,
-  getListEventsDate,
-})(Questionary);
+export default Questionary;
