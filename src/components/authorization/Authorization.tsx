@@ -11,6 +11,7 @@ import Button from '../common/forms/Button';
 
 import commonStyles from '../../App.module.css';
 import styles from './Authorization.module.css';
+import ButtonLink from '../common/forms/ButtonLink';
 
 interface AuthorizationProps {
   login: Function;
@@ -90,6 +91,9 @@ const Authorization = ({
           </div>
         </div>
         <Button disabled={isButtonDisabled()}>Войти</Button>
+        <ButtonLink className={styles.mediaLink} to="/media">
+          Медиафайлы
+        </ButtonLink>
       </form>
     </div>
   );

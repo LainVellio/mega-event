@@ -9,6 +9,7 @@ import FinalPage from './components/final/FinalPage';
 import Error500 from './components/error/Error500';
 
 import commonStyles from './App.module.css';
+import Media from './components/media/Media';
 
 export interface EventDate {
   id: number;
@@ -233,6 +234,7 @@ const App = () => {
             />
           )}
         />
+        <Route exact path="/media" render={() => <Media />} />
         <Route
           exact
           path="/questionary"

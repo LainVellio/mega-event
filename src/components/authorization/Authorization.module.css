@@ -22,6 +22,10 @@
   color: #f6483d;
 }
 
+.mediaLink {
+  margin-top: 50px;
+}
+
 @media only screen and (max-width: 750px) {
   .form {
     margin-top: 38px;

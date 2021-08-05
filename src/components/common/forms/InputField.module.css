@@ -30,6 +30,7 @@
   font-family: PT_Root_UI_medium;
   font-style: normal;
   font-size: 14px;
+  filter: none;
 }
 
 .inputField:disabled {
