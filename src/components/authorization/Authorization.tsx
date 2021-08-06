@@ -91,9 +91,12 @@ const Authorization = ({
           </div>
         </div>
         <Button disabled={isButtonDisabled()}>Войти</Button>
-        <ButtonLink className={styles.mediaLink} to="/media">
-          Медиафайлы
-        </ButtonLink>
+        <div className={styles.mediaLinks}>
+          <ButtonLink className={styles.mediaButton} to="/media">
+            Медиафайлы
+          </ButtonLink>
+          <ButtonLink to="/animation">CSS анимация</ButtonLink>
+        </div>
       </form>
     </div>
   );

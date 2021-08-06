@@ -22,8 +22,12 @@
   color: #f6483d;
 }
 
-.mediaLink {
+.mediaLinks {
+  display: flex;
   margin-top: 50px;
+}
+.mediaButton {
+  margin-right: 10px;
 }
 
 @media only screen and (max-width: 750px) {
