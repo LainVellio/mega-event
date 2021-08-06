@@ -156,7 +156,7 @@ const App = () => {
         phone: data.phone,
         eventId: data.selectEventDate.id,
       };
-      const specialData = !data.switches[0].isSwitch
+      const specialData = data.switches[0].isSwitch
         ? {
             name: data.fullName,
             dob: data.birthday,

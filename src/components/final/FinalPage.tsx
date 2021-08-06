@@ -19,7 +19,7 @@ interface ItemProps {
 
 const FinalPage = ({ resultForm, isAuth, isError500 }: FinalPageProps) => {
   const result = resultForm;
-  const isSwitch = !result.switches[0].isSwitch;
+  const isSwitch = result.switches[0].isSwitch;
   const [isRedirect, setIsRedirect] = useState(false);
 
   const onRedirect = () => {

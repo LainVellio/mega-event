@@ -48,7 +48,7 @@ const Questionary = ({
     phone: false,
   });
 
-  const isSwitch = !data.switches[0].isSwitch;
+  const isSwitch = data.switches[0].isSwitch;
 
   useEffect(() => {
     getListEventsDate();
@@ -79,7 +79,6 @@ const Questionary = ({
 
   const onSwitch = (switches: Array<SwitchI>) => {
     setData({ ...data, switches: [...switches] });
-    console.log(data);
   };
 
   const onSelect = (id: number) => {
@@ -113,7 +112,11 @@ const Questionary = ({
       ) : (
         <div>
           <h1 className={commonStyles.h1}>Заполните анкету участника</h1>
-          <Switch setSwitch={onSwitch} names={['Физ. Лицо', 'Юр. Лицо']} />
+          <Switch
+            setSwitch={onSwitch}
+            names={['Физ. Лицо', 'Юр. Лицо']}
+            isServerProgress={isServerProgress}
+          />
           <form onSubmit={handleSubmit}>
             <div className={styles.questionary}>
               <div className={styles.personalDataLeft}>

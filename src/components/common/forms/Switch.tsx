@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from './Button';
 import styles from './Switch.module.css';
 
@@ -23,6 +23,9 @@ const Switch = ({
   );
 
   const [switches, setSwitches] = useState(initialSwitches);
+  useEffect(() => {
+    setSwitch(switches);
+  }, [switches]);
   const SwitchButton = ({ name, isSwitch }: SwitchI) => {
     const onSwitch = () => {
       setSwitches(
@@ -32,7 +35,6 @@ const Switch = ({
             : { name: button.name, isSwitch: false },
         ),
       );
-      setSwitch(switches);
     };
 
     return (
