@@ -1,0 +1,38 @@
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 14px;
+  background-color: #1f2235;
+  width: 288px;
+  height: 48px;
+  margin: 28px auto 60px auto;
+}
+.switchDisabled {
+  pointer-events: none;
+}
+
+.switchButton {
+  font-family: PT_Root_UI_medium;
+  font-size: 18px;
+  padding: 8px 0;
+  font-weight: normal;
+  color: #676c7a;
+  width: 132px;
+  margin: 0 5px 0 0;
+  text-align: center;
+  border-radius: 14px;
+  margin-left: 5px;
+  background-color: rgba(255, 255, 255, 0);
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.switchButton:hover {
+  background-color: rgba(171, 129, 241, 0.4);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.switchButton:disabled {
+  color: #fff !important;
+  background-color: #ab81f1 !important;
+}

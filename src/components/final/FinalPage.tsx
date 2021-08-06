@@ -18,13 +18,14 @@ interface ItemProps {
 }
 
 const FinalPage = ({ resultForm, isAuth, isError500 }: FinalPageProps) => {
+  const result = resultForm;
+  const isSwitch = !result.switches[0].isSwitch;
   const [isRedirect, setIsRedirect] = useState(false);
 
   const onRedirect = () => {
     setIsRedirect(true);
   };
 
-  const result = resultForm;
   const Item = ({ label, value }: ItemProps) => (
     <div className={styles.item}>
       <div className={styles.label}>{label}</div>
@@ -42,13 +43,13 @@ const FinalPage = ({ resultForm, isAuth, isError500 }: FinalPageProps) => {
           {isRedirect && <Redirect to="/questionary" />}
           <h1 className={commonStyles.h1}>Спасибо за заявку!</h1>
           <div className={styles.result}>
-            {result.switch ? (
+            {isSwitch ? (
               <Item label="ФИО" value={result.fullName} />
             ) : (
               <Item label="Название компании" value={result.companyName} />
             )}
 
-            {result.switch ? (
+            {isSwitch ? (
               <Item label="Тип участника" value="Физ. лицо" />
             ) : (
               <Item label="Тип участника" value="Юр. лицо" />
@@ -56,7 +57,7 @@ const FinalPage = ({ resultForm, isAuth, isError500 }: FinalPageProps) => {
 
             <Item label="Номер телефона" value={result.phone} />
 
-            {result.switch ? (
+            {isSwitch ? (
               <Item label="Дата рождения" value={result.birthday} />
             ) : (
               <Item label="Должность" value={result.position} />

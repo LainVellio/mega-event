@@ -12,6 +12,7 @@ import Preloader from '../common/preloader/Preloader';
 import commonStyles from '../../App.module.css';
 import styles from './Questionary.module.css';
 import { EventDate, initialResultForm } from '../../App';
+import Switch, { SwitchI } from '../common/forms/Switch';
 
 type CheckboxName = 'parkingCheckbox' | 'handoutsCheckbox' | 'needHelpCheckbox';
 
@@ -47,6 +48,8 @@ const Questionary = ({
     phone: false,
   });
 
+  const isSwitch = !data.switches[0].isSwitch;
+
   useEffect(() => {
     getListEventsDate();
   }, [isAuth]);
@@ -74,11 +77,9 @@ const Questionary = ({
     });
   };
 
-  const onSwitch = () => {
-    setData({
-      ...data,
-      switch: !data.switch,
-    });
+  const onSwitch = (switches: Array<SwitchI>) => {
+    setData({ ...data, switches: [...switches] });
+    console.log(data);
   };
 
   const onSelect = (id: number) => {
@@ -98,7 +99,7 @@ const Questionary = ({
     if (isServerProgress || !inputValidate.phone || !data.selectEventDate.id)
       return true;
     else
-      return data.switch
+      return isSwitch
         ? !(inputValidate.fullName && inputValidate.birthday)
         : !(inputValidate.companyName && inputValidate.position);
   };
@@ -112,35 +113,14 @@ const Questionary = ({
       ) : (
         <div>
           <h1 className={commonStyles.h1}>Заполните анкету участника</h1>
-          <div
-            className={`${styles.switch} ${
-              isServerProgress ? styles.switchDisabled : ''
-            }`}
-          >
-            <Button
-              onClick={onSwitch}
-              className={styles.switchButton}
-              disabled={data.switch}
-            >
-              Физ. лицо
-            </Button>
-            <Button
-              onClick={onSwitch}
-              className={styles.switchButton}
-              disabled={!data.switch}
-            >
-              Юр. лицо
-            </Button>
-          </div>
+          <Switch setSwitch={onSwitch} names={['Физ. Лицо', 'Юр. Лицо']} />
           <form onSubmit={handleSubmit}>
             <div className={styles.questionary}>
               <div className={styles.personalDataLeft}>
                 <h2 className={commonStyles.h2}>Личные данные</h2>
 
                 <div>
-                  <div
-                    className={data.switch ? styles.input : styles.inputHidden}
-                  >
+                  <div className={isSwitch ? styles.input : styles.inputHidden}>
                     <InputField
                       type="text"
                       placeholder="ФИО"
@@ -152,9 +132,7 @@ const Questionary = ({
                       mask={false}
                     />
                   </div>
-                  <div
-                    className={data.switch ? styles.input : styles.inputHidden}
-                  >
+                  <div className={isSwitch ? styles.input : styles.inputHidden}>
                     <InputField
                       type="text"
                       placeholder="Дата рождения"
@@ -181,7 +159,7 @@ const Questionary = ({
 
                 <div>
                   <div
-                    className={!data.switch ? styles.input : styles.inputHidden}
+                    className={!isSwitch ? styles.input : styles.inputHidden}
                   >
                     <InputField
                       type="text"
@@ -196,7 +174,7 @@ const Questionary = ({
                   </div>
 
                   <div
-                    className={!data.switch ? styles.input : styles.inputHidden}
+                    className={!isSwitch ? styles.input : styles.inputHidden}
                   >
                     <InputField
                       type="text"

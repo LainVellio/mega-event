@@ -11,6 +11,7 @@ import Media from './components/media/Media';
 import Animation from './components/animation/Animation';
 
 import commonStyles from './App.module.css';
+import { SwitchI } from './components/common/forms/Switch';
 
 export interface EventDate {
   id: number;
@@ -27,7 +28,7 @@ export interface ResultForm {
   parkingCheckbox: boolean;
   handoutsCheckbox: boolean;
   needHelpCheckbox: boolean;
-  switch: boolean;
+  switches: Array<SwitchI>;
 }
 
 export const initialResultForm: ResultForm = {
@@ -43,7 +44,7 @@ export const initialResultForm: ResultForm = {
   parkingCheckbox: false,
   handoutsCheckbox: false,
   needHelpCheckbox: false,
-  switch: true,
+  switches: [{ name: '', isSwitch: false }],
 };
 
 const initialEventsDate: Array<EventDate> = [
@@ -155,7 +156,7 @@ const App = () => {
         phone: data.phone,
         eventId: data.selectEventDate.id,
       };
-      const specialData = data.switch
+      const specialData = !data.switches[0].isSwitch
         ? {
             name: data.fullName,
             dob: data.birthday,
