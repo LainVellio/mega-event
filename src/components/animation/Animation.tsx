@@ -12,6 +12,10 @@ export interface TransformCheckbox {
   rotate: boolean;
   translate: boolean;
   scale: boolean;
+  skewX: boolean;
+  skewY: boolean;
+  skew: boolean;
+  transformOrigin: boolean;
 }
 
 type TransFormType =
@@ -21,7 +25,11 @@ type TransFormType =
   | 'scaleY'
   | 'rotate'
   | 'translate'
-  | 'scale';
+  | 'scale'
+  | 'skewX'
+  | 'skewY'
+  | 'skew'
+  | 'transformOrigin';
 
 const Animation = () => {
   const initialTransform = {
@@ -32,6 +40,10 @@ const Animation = () => {
     rotate: false,
     translate: false,
     scale: false,
+    skewX: false,
+    skewY: false,
+    skew: false,
+    transformOrigin: false,
   };
 
   const [isTransforms, setIsTransforms] = useState<TransformCheckbox>(
@@ -43,6 +55,14 @@ const Animation = () => {
   const Transform = (className: TransFormType) => () => {
     setIsTransforms({
       ...initialTransform,
+      [className]: !isTransforms[className],
+      transformOrigin: isTransforms.transformOrigin,
+    });
+  };
+
+  const setPropertyTransform = (className: TransFormType) => () => {
+    setIsTransforms({
+      ...isTransforms,
       [className]: !isTransforms[className],
     });
   };
@@ -93,9 +113,31 @@ const Animation = () => {
         </div>
         <div className={styles.block}>
           <Checkbox
+            onClick={Transform('skewX')}
+            label={'skewX'}
+            checked={isTransforms.skewX}
+          />
+          <Checkbox
+            onClick={Transform('skewY')}
+            label={'skewY'}
+            checked={isTransforms.skewY}
+          />
+          <Checkbox
+            onClick={Transform('skew')}
+            label={'skew'}
+            checked={isTransforms.skew}
+          />
+        </div>
+        <div className={styles.block}>
+          <Checkbox
             onClick={Transform('rotate')}
             label={'rotate'}
             checked={isTransforms.rotate}
+          />
+          <Checkbox
+            onClick={setPropertyTransform('transformOrigin')}
+            label={'transform-origin'}
+            checked={isTransforms.transformOrigin}
           />
         </div>
       </div>

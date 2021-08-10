@@ -14,16 +14,15 @@ const Square = ({ isTransform, isTransforms }: ISquareProps) => {
     isTransform
       ? setTransformStyle(
           Object.entries(isTransforms)
-            .map((transform) => (transform[1] === true ? transform[0] : ''))
-            .join(''),
+            .map((transform) =>
+              transform[1] === true ? styles[transform[0]] : '',
+            )
+            .join(' '),
         )
       : setTransformStyle('');
-    console.log(transformStyle);
   }, [isTransform]);
 
-  return (
-    <div className={`${styles.square} ${styles[transformStyle]}`}>Square</div>
-  );
+  return <div className={`${styles.square} ${transformStyle}`}>Square</div>;
 };
 
 export default Square;

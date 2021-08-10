@@ -95,7 +95,10 @@ const Authorization = ({
           <ButtonLink className={styles.mediaButton} to="/media">
             Медиафайлы
           </ButtonLink>
-          <ButtonLink to="/animation">CSS анимация</ButtonLink>
+          <ButtonLink className={styles.mediaButton} to="/animation">
+            CSS анимация
+          </ButtonLink>
+          <ButtonLink to="/moment">MomentJS</ButtonLink>
         </div>
       </form>
     </div>
