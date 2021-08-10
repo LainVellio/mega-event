@@ -3,7 +3,7 @@ import stateOn from '../../../assets/images/checkboxOn.svg';
 import stateOff from '../../../assets/images/checkboxOff.svg';
 
 interface CheckboxProps extends React.HTMLAttributes<HTMLDivElement> {
-  disabled: boolean;
+  disabled?: boolean;
   checked: boolean;
   label: string;
 }

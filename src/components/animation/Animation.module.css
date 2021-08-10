@@ -1,0 +1,19 @@
+.checkboxContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.transformContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 600px;
+  height: 300px;
+  border: grey solid 1px;
+  margin: 0px auto 30px auto;
+}
+
+.block {
+  width: 10%;
+  margin-bottom: 30px;
+}
