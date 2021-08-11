@@ -1,6 +1,6 @@
 import styles from './Button.module.css';
 
-interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   name?: string;
   disabled?: boolean;
 }

@@ -12,7 +12,7 @@
     transform: translateX(0);
   }
   50% {
-    transform: translateX(270px);
+    transform: translateX(500px);
   }
   to {
     transform: translateX(0);
@@ -30,45 +30,67 @@
     transform: translateY(0);
   }
 }
+@keyframes scaleX {
+  from {
+    transform: scaleX(1);
+  }
+  50% {
+    transform: scaleX(1.5);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes scaleY {
+  from {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.5);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+@keyframes skewX {
+  from {
+    transform: skewX(0);
+  }
+  50% {
+    transform: skewX(45deg);
+  }
+  to {
+    transform: skewX(0);
+  }
+}
 
 .translateX {
-  animation: translateX 3s linear;
+  animation: translateX 2s linear;
 }
 
 .translateY {
-  transform: translateY(120px);
-}
-
-.translate {
-  transform: translate(270px, 120px);
+  animation: translateY 2s linear;
 }
 
 .scaleX {
-  transform: scaleX(3);
+  animation: scaleX 2s linear;
 }
 
 .scaleY {
-  transform: scaleY(3);
-}
-
-.scale {
-  transform: scale(3, 3);
-}
-
-.rotate {
-  transform: rotate(180deg);
+  animation: scaleY 2s linear;
 }
 
 .skewX {
-  transform: skewX(45deg);
+  animation: skewX 2s linear;
 }
 
 .skewY {
   transform: skewY(45deg);
 }
 
-.skew {
-  transform: skew(25deg, 25deg);
+.rotate {
+  transform: rotate(180deg);
 }
 
 .transformOrigin {

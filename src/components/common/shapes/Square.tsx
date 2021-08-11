@@ -5,24 +5,41 @@ import styles from './Square.module.css';
 export interface ISquareProps {
   isTransform: boolean;
   isTransforms: TransformCheckbox;
+  setIsTransform: Function;
 }
 
-const Square = ({ isTransform, isTransforms }: ISquareProps) => {
-  const [transformStyle, setTransformStyle] = useState('');
+const Square = ({
+  isTransform,
+  isTransforms,
+  setIsTransform,
+}: ISquareProps) => {
+  const initialDivTree = <div className={`${styles.square}`}></div>;
+  const [divTree, setDivTree] = useState(initialDivTree);
+  const createDiv = (child: any, transformStyle: any) => (
+    <div className={transformStyle}>{child}</div>
+  );
+
+  const createDivTree = () => {
+    const transformStyles = Object.entries(isTransforms).map((transform) =>
+      transform[1] === true ? transform[0] : '',
+    );
+
+    let div = initialDivTree;
+    for (let transform of transformStyles) {
+      if (transform !== '') {
+        div = createDiv(div, styles[transform]);
+      }
+
+      setDivTree(div);
+    }
+    setIsTransform(false);
+  };
 
   useEffect(() => {
-    isTransform
-      ? setTransformStyle(
-          Object.entries(isTransforms)
-            .map((transform) =>
-              transform[1] === true ? styles[transform[0]] : '',
-            )
-            .join(' '),
-        )
-      : setTransformStyle('');
+    isTransform ? createDivTree() : setDivTree(initialDivTree);
   }, [isTransform]);
 
-  return <div className={`${styles.square} ${transformStyle}`}>Square</div>;
+  return <div>{divTree}</div>;
 };
 
 export default Square;

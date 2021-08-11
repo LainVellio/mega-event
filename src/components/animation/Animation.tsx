@@ -10,11 +10,8 @@ export interface TransformCheckbox {
   scaleX: boolean;
   scaleY: boolean;
   rotate: boolean;
-  translate: boolean;
-  scale: boolean;
   skewX: boolean;
   skewY: boolean;
-  skew: boolean;
   transformOrigin: boolean;
 }
 
@@ -24,11 +21,8 @@ type TransFormType =
   | 'scaleX'
   | 'scaleY'
   | 'rotate'
-  | 'translate'
-  | 'scale'
   | 'skewX'
   | 'skewY'
-  | 'skew'
   | 'transformOrigin';
 
 const Animation = () => {
@@ -38,11 +32,8 @@ const Animation = () => {
     scaleX: false,
     scaleY: false,
     rotate: false,
-    translate: false,
-    scale: false,
     skewX: false,
     skewY: false,
-    skew: false,
     transformOrigin: false,
   };
 
@@ -51,10 +42,30 @@ const Animation = () => {
   );
 
   const [isTransform, setIsTransform] = useState(false);
+  const initialDivTree = <div></div>;
+  const [divTree, setDivTree] = useState(initialDivTree);
+  const createDiv = (child: any, transformStyle: any) => (
+    <div className={transformStyle}>{child}</div>
+  );
+
+  const createDivTree = () => {
+    const transformStyles = Object.entries(isTransforms).map((transform) =>
+      transform[1] === true ? transform[0] : '',
+    );
+
+    let div = initialDivTree;
+    for (let transform of transformStyles) {
+      if (transform !== '') {
+        div = createDiv(div, styles[transform]);
+      }
+      console.log('render');
+      setDivTree(div);
+    }
+  };
 
   const Transform = (className: TransFormType) => () => {
     setIsTransforms({
-      ...initialTransform,
+      ...isTransforms,
       [className]: !isTransforms[className],
       transformOrigin: isTransforms.transformOrigin,
     });
@@ -68,13 +79,17 @@ const Animation = () => {
   };
 
   const onTransform = () => {
-    setIsTransform(!isTransform);
+    setIsTransform(true);
   };
 
   return (
     <div>
       <div className={styles.transformContainer}>
-        <Square isTransform={isTransform} isTransforms={isTransforms} />
+        <Square
+          isTransform={isTransform}
+          isTransforms={isTransforms}
+          setIsTransform={setIsTransform}
+        />
       </div>
       <div className={styles.checkboxContainer}>
         <div className={styles.block}>
@@ -88,11 +103,6 @@ const Animation = () => {
             label={'translateY'}
             checked={isTransforms.translateY}
           />
-          <Checkbox
-            onClick={Transform('translate')}
-            label={'translate'}
-            checked={isTransforms.translate}
-          />
         </div>
         <div className={styles.block}>
           <Checkbox
@@ -105,11 +115,6 @@ const Animation = () => {
             label={'scaleY'}
             checked={isTransforms.scaleY}
           />
-          <Checkbox
-            onClick={Transform('scale')}
-            label={'scale'}
-            checked={isTransforms.scale}
-          />
         </div>
         <div className={styles.block}>
           <Checkbox
@@ -121,11 +126,6 @@ const Animation = () => {
             onClick={Transform('skewY')}
             label={'skewY'}
             checked={isTransforms.skewY}
-          />
-          <Checkbox
-            onClick={Transform('skew')}
-            label={'skew'}
-            checked={isTransforms.skew}
           />
         </div>
         <div className={styles.block}>
@@ -141,11 +141,8 @@ const Animation = () => {
           />
         </div>
       </div>
-      {!isTransform ? (
-        <Button onClick={onTransform}>Go</Button>
-      ) : (
-        <Button onClick={onTransform}>Clear</Button>
-      )}
+
+      <Button onClick={onTransform}>Go</Button>
     </div>
   );
 };
