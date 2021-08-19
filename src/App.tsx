@@ -13,6 +13,8 @@ import Animation from './components/animation/Animation';
 import commonStyles from './App.module.css';
 import { SwitchI } from './components/common/forms/Switch';
 import Moment from './components/moment/Moment';
+import Events from './components/events/Events';
+import Grid from './components/grid/Grid';
 
 export interface EventDate {
   id: number;
@@ -240,6 +242,8 @@ const App = () => {
         <Route exact path="/media" render={() => <Media />} />
         <Route exact path="/animation" render={() => <Animation />} />
         <Route exact path="/moment" render={() => <Moment />} />
+        <Route exact path="/events" render={() => <Events />} />
+        <Route exact path="/grid" render={() => <Grid />} />
         <Route
           exact
           path="/questionary"

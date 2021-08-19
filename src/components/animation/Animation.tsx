@@ -4,6 +4,16 @@ import Checkbox from '../common/forms/Checkbox';
 import Square from '../common/shapes/Square';
 import styles from './Animation.module.css';
 
+type TransFormType =
+  | 'translateX'
+  | 'translateY'
+  | 'scaleX'
+  | 'scaleY'
+  | 'rotate'
+  | 'skewX'
+  | 'skewY'
+  | 'transformOrigin';
+
 export interface TransformCheckbox {
   translateX: boolean;
   translateY: boolean;
@@ -14,16 +24,6 @@ export interface TransformCheckbox {
   skewY: boolean;
   transformOrigin: boolean;
 }
-
-type TransFormType =
-  | 'translateX'
-  | 'translateY'
-  | 'scaleX'
-  | 'scaleY'
-  | 'rotate'
-  | 'skewX'
-  | 'skewY'
-  | 'transformOrigin';
 
 const Animation = () => {
   const initialTransform = {
@@ -58,7 +58,6 @@ const Animation = () => {
       if (transform !== '') {
         div = createDiv(div, styles[transform]);
       }
-      console.log('render');
       setDivTree(div);
     }
   };
