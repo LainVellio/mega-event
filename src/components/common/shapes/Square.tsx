@@ -15,7 +15,8 @@ const Square = ({
 }: ISquareProps) => {
   const initialDivTree = <div className={`${styles.square}`}></div>;
   const [divTree, setDivTree] = useState(initialDivTree);
-  const createDiv = (child: any, transformStyle: any) => (
+
+  const createDiv = (child: JSX.Element, transformStyle: string) => (
     <div className={transformStyle}>{child}</div>
   );
 
@@ -29,9 +30,11 @@ const Square = ({
       if (transform !== '') {
         div = createDiv(div, styles[transform]);
       }
-
-      setDivTree(div);
     }
+    setDivTree(div);
+  };
+
+  const onAnimationEnd = () => {
     setIsTransform(false);
   };
 
@@ -39,7 +42,7 @@ const Square = ({
     isTransform ? createDivTree() : setDivTree(initialDivTree);
   }, [isTransform]);
 
-  return <div>{divTree}</div>;
+  return <div onAnimationEnd={onAnimationEnd}>{divTree}</div>;
 };
 
 export default Square;

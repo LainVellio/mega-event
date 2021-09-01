@@ -65,6 +65,30 @@
   }
 }
 
+@keyframes skewY {
+  from {
+    transform: skewY(0);
+  }
+  50% {
+    transform: skewY(45deg);
+  }
+  to {
+    transform: skewY(0);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(0);
+  }
+}
+
 .translateX {
   animation: translateX 2s linear;
 }
@@ -86,11 +110,11 @@
 }
 
 .skewY {
-  transform: skewY(45deg);
+  animation: skewY 2s linear;
 }
 
 .rotate {
-  transform: rotate(180deg);
+  animation: rotate 2s linear;
 }
 
 .transformOrigin {

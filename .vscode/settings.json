@@ -1,8 +1,5 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "cSpell.words": [
-    "Breitschrift",
-    "Halvar",
-    "truetype"
-  ]
+  "cSpell.words": ["Breitschrift", "Halvar", "Questionary", "truetype"],
+  "cSpell.language": ",ru"
 }

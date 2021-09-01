@@ -4,15 +4,16 @@ import Checkbox from '../common/forms/Checkbox';
 import Square from '../common/shapes/Square';
 import styles from './Animation.module.css';
 
-type TransFormType =
-  | 'translateX'
-  | 'translateY'
-  | 'scaleX'
-  | 'scaleY'
-  | 'rotate'
-  | 'skewX'
-  | 'skewY'
-  | 'transformOrigin';
+enum TransFormType {
+  translateX = 'translateX',
+  translateY = 'translateY',
+  scaleX = 'scaleX',
+  scaleY = 'scaleY',
+  rotate = 'rotate',
+  skewX = 'skewX',
+  skewY = 'skewY',
+  transformOrigin = 'transformOrigin',
+}
 
 export interface TransformCheckbox {
   translateX: boolean;
@@ -43,8 +44,8 @@ const Animation = () => {
 
   const [isTransform, setIsTransform] = useState(false);
   const initialDivTree = <div></div>;
-  const [divTree, setDivTree] = useState(initialDivTree);
-  const createDiv = (child: any, transformStyle: any) => (
+  const [divTree, setDivTree] = useState<JSX.Element>(initialDivTree);
+  const createDiv = (child: JSX.Element, transformStyle: string) => (
     <div className={transformStyle}>{child}</div>
   );
 
@@ -93,49 +94,49 @@ const Animation = () => {
       <div className={styles.checkboxContainer}>
         <div className={styles.block}>
           <Checkbox
-            onClick={Transform('translateX')}
-            label={'translateX'}
+            onClick={Transform(TransFormType.translateX)}
+            label={TransFormType.translateX}
             checked={isTransforms.translateX}
           />
           <Checkbox
-            onClick={Transform('translateY')}
-            label={'translateY'}
+            onClick={Transform(TransFormType.translateY)}
+            label={TransFormType.translateY}
             checked={isTransforms.translateY}
           />
         </div>
         <div className={styles.block}>
           <Checkbox
-            onClick={Transform('scaleX')}
-            label={'scaleX'}
+            onClick={Transform(TransFormType.scaleX)}
+            label={TransFormType.scaleX}
             checked={isTransforms.scaleX}
           />
           <Checkbox
-            onClick={Transform('scaleY')}
-            label={'scaleY'}
+            onClick={Transform(TransFormType.scaleY)}
+            label={TransFormType.scaleY}
             checked={isTransforms.scaleY}
           />
         </div>
         <div className={styles.block}>
           <Checkbox
-            onClick={Transform('skewX')}
-            label={'skewX'}
+            onClick={Transform(TransFormType.skewX)}
+            label={TransFormType.skewX}
             checked={isTransforms.skewX}
           />
           <Checkbox
-            onClick={Transform('skewY')}
-            label={'skewY'}
+            onClick={Transform(TransFormType.skewY)}
+            label={TransFormType.skewX}
             checked={isTransforms.skewY}
           />
         </div>
         <div className={styles.block}>
           <Checkbox
-            onClick={Transform('rotate')}
-            label={'rotate'}
+            onClick={Transform(TransFormType.rotate)}
+            label={TransFormType.rotate}
             checked={isTransforms.rotate}
           />
           <Checkbox
-            onClick={setPropertyTransform('transformOrigin')}
-            label={'transform-origin'}
+            onClick={setPropertyTransform(TransFormType.transformOrigin)}
+            label={TransFormType.transformOrigin}
             checked={isTransforms.transformOrigin}
           />
         </div>

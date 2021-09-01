@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import MaskedInput from 'react-text-mask';
 
 import styles from './InputField.module.css';
@@ -89,7 +89,7 @@ const InputField = ({
           }
           placeholder={placeholder}
           value={value}
-          onChange={(e: any) => {
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
             onChange(e.target.value);
           }}
           onFocus={onFocus}
