@@ -15,6 +15,7 @@ import { SwitchI } from './components/common/forms/Switch';
 import Moment from './components/moment/Moment';
 import Events from './components/events/Events';
 import Grid from './components/grid/Grid';
+import ChartJS from './components/chartjs/chartjs';
 
 export interface EventDate {
   id: number;
@@ -91,7 +92,7 @@ const App = () => {
       const response = await api.auth(email, password);
       setToken(response.data.token);
       setIsAuth(true);
-    } catch (error) {
+    } catch (error: any) {
       if (error.response === undefined) {
         setIsServerProgress(false);
         setIsAuth(true);
@@ -123,7 +124,7 @@ const App = () => {
       const response = await api.getList(token);
       setEventsDate(response.data.eventsDate);
       setListStatus(true);
-    } catch (error) {
+    } catch (error: any) {
       if (error.response === undefined) {
         setListStatus(true);
         setIsServerProgress(false);
@@ -189,7 +190,7 @@ const App = () => {
       await api.postForm(token, form);
       setResultForm(data);
       setIsComplete(true);
-    } catch (error) {
+    } catch (error: any) {
       if (error.response === undefined) {
         setResultForm(data);
         setIsComplete(true);
@@ -244,6 +245,7 @@ const App = () => {
         <Route exact path="/moment" render={() => <Moment />} />
         <Route exact path="/events" render={() => <Events />} />
         <Route exact path="/grid" render={() => <Grid />} />
+        <Route exact path="/ChartJS" render={() => <ChartJS />} />
         <Route
           exact
           path="/questionary"

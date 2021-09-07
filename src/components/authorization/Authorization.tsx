@@ -104,7 +104,10 @@ const Authorization = ({
           <ButtonLink className={styles.button} to="/events">
             Events
           </ButtonLink>
-          <ButtonLink to="/grid">Grid</ButtonLink>
+          <ButtonLink className={styles.button} to="/grid">
+            Grid
+          </ButtonLink>
+          <ButtonLink to="/ChartJS">ChartJS</ButtonLink>
         </div>
       </form>
     </div>
