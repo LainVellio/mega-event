@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
+import { useFormik } from 'formik';
 
-import {
-  email as emailValidator,
-  required,
-} from '../common/validators/validators';
-
-import InputField from '../common/forms/InputField';
+import validate from './validate';
+import FormikField from '../common/forms/FormikField';
 import Button from '../common/forms/Button';
+import ButtonLink from '../common/forms/ButtonLink';
 
 import commonStyles from '../../App.module.css';
 import styles from './Authorization.module.css';
-import ButtonLink from '../common/forms/ButtonLink';
+
+export interface ILoginData {
+  email: string;
+  password: string;
+}
 
 interface AuthorizationProps {
   login: Function;
@@ -26,66 +28,41 @@ const Authorization = ({
   isAuth,
   serverErrorMessage,
 }: AuthorizationProps) => {
-  const [loginData, setLogInData] = useState({ email: '', password: '' });
-  const [isInputByValidate, setInputValidate] = useState({
-    email: false,
-    password: false,
+  const formik = useFormik({
+    initialValues: { email: '', password: '' },
+    validationSchema: validate,
+    onSubmit: (values: ILoginData) => {
+      login(values.email, values.password);
+    },
   });
-  const { email, password } = loginData;
-
-  const handleChange = (fieldName: string) => (fieldValue: string) => {
-    setLogInData({
-      ...loginData,
-      [fieldName]: fieldValue,
-    });
-  };
-
-  const handleValidate = (fieldName: string) => (isValidateField: string) => {
-    setInputValidate({
-      ...isInputByValidate,
-      [fieldName]: isValidateField,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    login(email, password);
-  };
-
   const isButtonDisabled = () => {
     if (isServerProgress) return true;
-    return !Object.values(isInputByValidate).every((i) => i);
+    return Object.values(formik.errors).some((i) => i);
   };
 
   return (
     <div>
       {isAuth && <Redirect to="/questionary" />}
       <h1 className={commonStyles.h1}>Добро пожаловать</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputBlock}>
           <div className={styles.email}>
-            <InputField
+            <FormikField
+              name="email"
               type="text"
               placeholder="E-mail"
-              validators={[required, emailValidator]}
-              value={email}
-              onChange={handleChange('email')}
-              validate={handleValidate('email')}
+              formik={formik}
               disabled={isServerProgress}
-              mask={false}
             />
           </div>
 
           <div>
-            <InputField
+            <FormikField
+              name="password"
               type="password"
               placeholder="Пароль"
-              validators={[required]}
-              value={password}
-              onChange={handleChange('password')}
-              validate={handleValidate('password')}
+              formik={formik}
               disabled={isServerProgress}
-              mask={false}
             />
             <div className={styles.serverError}>{serverErrorMessage}</div>
           </div>

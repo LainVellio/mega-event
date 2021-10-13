@@ -11,5 +11,5 @@ export const email = (value: string) => {
 
 export const minLength = (minLength: number) => (value: string) => {
   if (value.replace(/_/g, '').length >= minLength) return undefined;
-  return 'Поле заполненно не полностью';
+  return 'Поле заполнено не полностью';
 };

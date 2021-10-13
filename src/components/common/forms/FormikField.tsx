@@ -1,56 +1,36 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
-import MaskedInput from 'react-text-mask';
+import React, { useRef, useState } from 'react';
 
 import styles from './InputField.module.css';
+
 import eyeOpenDisabled from '../../../assets/images/eyeOpenDisabled.svg';
 import eyeOpenActive from '../../../assets/images/eyeOpenActive.svg';
 import eyeClosed from '../../../assets/images/eyeClosed.svg';
 
-interface InputFieldProps {
-  onChange: Function;
-  placeholder: string;
-  type: string;
-  value: string;
-  disabled: boolean;
-  validators: Array<Function>;
-  validate: Function;
-  mask: Array<RegExp | string> | false;
+interface IFormikField extends React.InputHTMLAttributes<HTMLInputElement> {
+  formik: any;
 }
 
-const InputField = ({
+const FormikField = ({
+  name,
   type,
-  value,
   placeholder,
   disabled,
-  validators,
-  onChange,
-  validate,
-  mask,
-}: InputFieldProps) => {
+  formik,
+}: IFormikField) => {
+  const { handleBlur, handleChange } = formik;
+  const value = formik.values[name!];
+  const isTouched = formik.touched[name!];
+  const error = formik.errors[name!];
+
   const [isFocused, setIsFocused] = useState(false);
-  const [isTouched, setIsTouched] = useState(false);
-  const [error, setError] = useState(null);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const inputRef = useRef<MaskedInput>(null);
-
-  useEffect(() => {
-    const checkValidate = () => {
-      const error = validators
-        .map((validator) => validator(value))
-        .find((e) => e);
-      setError(error);
-      validate(!error);
-    };
-
-    validators && checkValidate();
-  }, [value, isFocused]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const onFocus = () => {
     setIsFocused(true);
-    setIsTouched(true);
   };
-
-  const onBlur = () => {
+  const onBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    handleBlur(e);
     setIsFocused(false);
   };
 
@@ -60,7 +40,7 @@ const InputField = ({
 
   const onMouseUpEye = () => {
     setIsPasswordVisible(false);
-    inputRef?.current?.inputElement.focus();
+    inputRef.current && inputRef.current.focus();
   };
 
   const onChangeEye = () => {
@@ -80,8 +60,8 @@ const InputField = ({
         {(value || isFocused) && (
           <label className={styles.label}>{placeholder}</label>
         )}
-        <MaskedInput
-          mask={mask}
+        <input
+          name={name}
           className={
             styles.inputField +
               ' ' +
@@ -89,9 +69,7 @@ const InputField = ({
           }
           placeholder={placeholder}
           value={value}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            onChange(e.target.value);
-          }}
+          onChange={handleChange}
           onFocus={onFocus}
           onBlur={onBlur}
           disabled={disabled}
@@ -109,11 +87,9 @@ const InputField = ({
           />
         )}
       </div>
-      {isTouched && !isFocused && error && (
-        <div className={styles.error}>{error}</div>
-      )}
+      {isTouched && error && <div className={styles.error}>{error}</div>}
     </div>
   );
 };
 
-export default InputField;
+export default FormikField;

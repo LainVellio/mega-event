@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
@@ -86,71 +86,71 @@ const App = () => {
   const [isError500, setError500] = useState(false);
 
   const login = async (email: string, password: string) => {
-    try {
-      setServerErrorMessage('');
-      setIsServerProgress(true);
-      const response = await api.auth(email, password);
-      setToken(response.data.token);
-      setIsAuth(true);
-    } catch (error: any) {
-      if (error.response === undefined) {
-        setIsServerProgress(false);
-        setIsAuth(true);
-        return;
-      }
-      switch (error.response.status) {
-        case 400: {
-          setServerErrorMessage('Неверный email или пароль');
-          break;
-        }
-        case 500: {
-          setServerErrorMessage('Ошибка сервера');
-          break;
-        }
-
-        default: {
-          setServerErrorMessage('Неизвестная ошибка');
-          break;
-        }
-      }
-    }
+    // try {
+    //   setServerErrorMessage('');
+    //   setIsServerProgress(true);
+    //   const response = await api.auth(email, password);
+    //   setToken(response.data.token);
+    //   setIsAuth(true);
+    // } catch (error: any) {
+    //   if (error.response === undefined) {
     setIsServerProgress(false);
+    setIsAuth(true);
+    return;
+    // }
+    //   switch (error.response.status) {
+    //     case 400: {
+    //       setServerErrorMessage('Неверный email или пароль');
+    //       break;
+    //     }
+    //     case 500: {
+    //       setServerErrorMessage('Ошибка сервера');
+    //       break;
+    //     }
+
+    //     default: {
+    //       setServerErrorMessage('Неизвестная ошибка');
+    //       break;
+    //     }
+    //   }
+    // }
+    // setIsServerProgress(false);
   };
 
   const getListEventsDate = async () => {
-    try {
-      setListStatus(false);
-      setIsServerProgress(true);
-      const response = await api.getList(token);
-      setEventsDate(response.data.eventsDate);
-      setListStatus(true);
-    } catch (error: any) {
-      if (error.response === undefined) {
-        setListStatus(true);
-        setIsServerProgress(false);
-        return;
-      }
-      switch (error.response.status) {
-        case 401: {
-          setServerErrorMessage('Ошибка авторизации');
-          setToken('');
-          setIsAuth(false);
-          break;
-        }
-        case 500: {
-          setError500(true);
-          break;
-        }
-
-        default: {
-          setToken('');
-          setIsAuth(false);
-          setServerErrorMessage('Неизвестная ошибка');
-          break;
-        }
-      }
-    }
+    // try {
+    //   setListStatus(false);
+    //   setIsServerProgress(true);
+    //   const response = await api.getList(token);
+    //   setEventsDate(response.data.eventsDate);
+    //   setListStatus(true);
+    // } catch (error: any) {
+    //   if (error.response === undefined) {
+    setListStatus(true);
     setIsServerProgress(false);
+    return;
+    //   }
+    //   switch (error.response.status) {
+    //     case 401: {
+    //       setServerErrorMessage('Ошибка авторизации');
+    //       setToken('');
+    //       setIsAuth(false);
+    //       break;
+    //     }
+    //     case 500: {
+    //       setError500(true);
+    //       break;
+    //     }
+
+    //     default: {
+    //       setToken('');
+    //       setIsAuth(false);
+    //       setServerErrorMessage('Неизвестная ошибка');
+    //       break;
+    //     }
+    //   }
+    // }
+    // setIsServerProgress(false);
   };
 
   const sendResultForm = async (data: ResultForm) => {

@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './Checkbox.module.css';
 import stateOn from '../../../assets/images/checkboxOn.svg';
 import stateOff from '../../../assets/images/checkboxOff.svg';

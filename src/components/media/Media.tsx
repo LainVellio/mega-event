@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from './Media.module.css';
 import ReactPlayer from 'react-player';
 import Switch, { SwitchI } from '../common/forms/Switch';

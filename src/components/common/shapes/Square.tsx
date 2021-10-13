@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TransformCheckbox } from '../../animation/Animation';
 import styles from './Square.module.css';
 
