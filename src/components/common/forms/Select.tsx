@@ -6,33 +6,29 @@ import dropUp from '../../../assets/images/arrowDropUp.svg';
 import { EventDate } from '../../../App';
 
 interface SelectProps {
+  name: string;
   eventsDate: Array<EventDate>;
-  selectEventDate: string;
+  formik: any;
   disabled: boolean;
-  onSelect: Function;
 }
 
-const Select = ({
-  eventsDate,
-  selectEventDate,
-  onSelect,
-  disabled,
-}: SelectProps) => {
+const Select = ({ name, formik, eventsDate, disabled }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const selectEventDate = formik.values[name!];
 
   const onClickMain = () => {
     setIsOpen(!isOpen);
   };
 
-  const Field = (props: EventDate) => {
+  const Field = (selectDate: EventDate) => {
     const onClickDate = () => {
       setIsOpen(false);
-      onSelect(props.id);
+      formik.setFieldValue(name, selectDate);
     };
     return (
       <div className={styles.input}>
         <div onClick={onClickDate} className={`${styles.date}`}>
-          {props.label}
+          {selectDate.label}
         </div>
       </div>
     );
@@ -49,7 +45,7 @@ const Select = ({
           className={`${styles.input} ${disabled ? styles.inputDisabled : ''}`}
         >
           <div className={styles.text}>
-            {selectEventDate || 'День мероприятия'}
+            {selectEventDate.label || 'День мероприятия'}
           </div>
           <img className={styles.img} src={isOpen ? dropUp : dropDown} alt="" />
         </div>

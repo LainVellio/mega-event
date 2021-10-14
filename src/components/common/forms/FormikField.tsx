@@ -1,13 +1,14 @@
 import React, { useRef, useState } from 'react';
 
 import styles from './InputField.module.css';
-
 import eyeOpenDisabled from '../../../assets/images/eyeOpenDisabled.svg';
 import eyeOpenActive from '../../../assets/images/eyeOpenActive.svg';
 import eyeClosed from '../../../assets/images/eyeClosed.svg';
+import MaskedInput from 'react-text-mask';
 
 interface IFormikField extends React.InputHTMLAttributes<HTMLInputElement> {
   formik: any;
+  mask: Array<RegExp | string> | false;
 }
 
 const FormikField = ({
@@ -16,6 +17,7 @@ const FormikField = ({
   placeholder,
   disabled,
   formik,
+  mask,
 }: IFormikField) => {
   const { handleBlur, handleChange } = formik;
   const value = formik.values[name!];
@@ -24,7 +26,7 @@ const FormikField = ({
 
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<MaskedInput>(null);
 
   const onFocus = () => {
     setIsFocused(true);
@@ -40,7 +42,7 @@ const FormikField = ({
 
   const onMouseUpEye = () => {
     setIsPasswordVisible(false);
-    inputRef.current && inputRef.current.focus();
+    inputRef.current && inputRef.current.inputElement.focus();
   };
 
   const onChangeEye = () => {
@@ -60,7 +62,8 @@ const FormikField = ({
         {(value || isFocused) && (
           <label className={styles.label}>{placeholder}</label>
         )}
-        <input
+        <MaskedInput
+          mask={mask}
           name={name}
           className={
             styles.inputField +

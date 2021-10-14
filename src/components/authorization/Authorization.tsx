@@ -53,6 +53,7 @@ const Authorization = ({
               placeholder="E-mail"
               formik={formik}
               disabled={isServerProgress}
+              mask={false}
             />
           </div>
 
@@ -63,11 +64,14 @@ const Authorization = ({
               placeholder="Пароль"
               formik={formik}
               disabled={isServerProgress}
+              mask={false}
             />
             <div className={styles.serverError}>{serverErrorMessage}</div>
           </div>
         </div>
-        <Button disabled={isButtonDisabled()}>Войти</Button>
+        <Button type="submit" disabled={isButtonDisabled()}>
+          Войти
+        </Button>
         <div className={styles.mediaLinks}>
           <ButtonLink className={styles.button} to="/media">
             Медиафайлы

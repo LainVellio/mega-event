@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
 
-import api from './api';
 import Authorization from './components/authorization/Authorization';
 import Questionary from './components/questionary/Questionary';
 import FinalPage from './components/final/FinalPage';
@@ -154,6 +153,7 @@ const App = () => {
   };
 
   const sendResultForm = async (data: ResultForm) => {
+    console.log('fasdfasdfasdf');
     try {
       setIsServerProgress(true);
       const commonData = {
@@ -187,7 +187,7 @@ const App = () => {
 
       const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
 
-      await api.postForm(token, form);
+      //  await api.postForm(token, form);
       setResultForm(data);
       setIsComplete(true);
     } catch (error: any) {

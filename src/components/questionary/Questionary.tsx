@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
+import { useFormik } from 'formik';
 
-import { minLength, required } from '../common/validators/validators';
-
-import Checkbox from '../common/forms/Checkbox';
-import InputField from '../common/forms/InputField';
+import { EventDate, initialResultForm, ResultForm } from '../../App';
 import Select from '../common/forms/Select';
 import Button from '../common/forms/Button';
 import Preloader from '../common/preloader/Preloader';
+import FormikField from '../common/forms/FormikField';
+import Switch, { SwitchI } from '../common/forms/Switch';
+import FormikCheckbox from '../common/forms/FormikCheckbox';
+import validate from './validate';
 
 import commonStyles from '../../App.module.css';
 import styles from './Questionary.module.css';
-import { EventDate, initialResultForm } from '../../App';
-import Switch, { SwitchI } from '../common/forms/Switch';
-
-type CheckboxName = 'parkingCheckbox' | 'handoutsCheckbox' | 'needHelpCheckbox';
 
 interface QuestionaryProps {
   isAuth: boolean;
@@ -37,70 +35,32 @@ const Questionary = ({
   getListEventsDate,
   isServerProgress,
 }: QuestionaryProps) => {
-  const [data, setData] = useState(initialResultForm);
-
-  const [inputValidate, setInputValidate] = useState({
-    fullName: false,
-    personalPhone: false,
-    birthday: false,
-    companyName: false,
-    position: false,
-    phone: false,
+  const formik = useFormik({
+    initialValues: initialResultForm,
+    validationSchema: validate,
+    onSubmit: (values: ResultForm) => {
+      console.log('submit');
+      sendResultForm(values);
+    },
   });
-
-  const isSwitch = data.switches[0].isSwitch;
-
+  console.log(validate);
+  const isSwitch = formik.values.switches[0].isSwitch;
+  const errors = formik.errors;
   useEffect(() => {
     getListEventsDate();
   }, [isAuth]);
 
-  const handleChange = (fieldName: string) => (fieldValue: string) => {
-    setData({
-      ...data,
-      [fieldName]: fieldValue,
-    });
-  };
-
-  const handleValidate = (fieldName: string) => (isValidateField: string) => {
-    setInputValidate({
-      ...inputValidate,
-      [fieldName]: isValidateField,
-    });
-  };
-  const minLengthBirthday = minLength(10);
-  const minLengthPhone = minLength(16);
-
-  const onChecked = (checkboxName: CheckboxName) => () => {
-    setData({
-      ...data,
-      [checkboxName]: !data[checkboxName],
-    });
-  };
-
   const onSwitch = (switches: Array<SwitchI>) => {
-    setData({ ...data, switches: [...switches] });
-  };
-
-  const onSelect = (id: number) => {
-    setData({
-      ...data,
-      selectEventDate:
-        eventsDate.find((i) => i.id === id) || data.selectEventDate,
-    });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    sendResultForm(data);
+    formik.setFieldValue('switches', switches);
   };
 
   const isDisabledButton = () => {
-    if (isServerProgress || !inputValidate.phone || !data.selectEventDate.id)
+    if (isServerProgress || errors.phone || !formik.values.selectEventDate.id)
       return true;
     else
       return isSwitch
-        ? !(inputValidate.fullName && inputValidate.birthday)
-        : !(inputValidate.companyName && inputValidate.position);
+        ? !!(errors.fullName || errors.birthday)
+        : !!(errors.companyName || errors.position);
   };
 
   return (
@@ -117,88 +77,83 @@ const Questionary = ({
             names={['Физ. Лицо', 'Юр. Лицо']}
             isServerProgress={isServerProgress}
           />
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={formik.handleSubmit}>
             <div className={styles.questionary}>
               <div className={styles.personalDataLeft}>
                 <h2 className={commonStyles.h2}>Личные данные</h2>
 
                 <div>
-                  <div className={isSwitch ? styles.input : styles.inputHidden}>
-                    <InputField
-                      type="text"
-                      placeholder="ФИО"
-                      validators={[required]}
-                      value={data.fullName}
-                      disabled={isServerProgress}
-                      onChange={handleChange('fullName')}
-                      validate={handleValidate('fullName')}
-                      mask={false}
-                    />
-                  </div>
-                  <div className={isSwitch ? styles.input : styles.inputHidden}>
-                    <InputField
-                      type="text"
-                      placeholder="Дата рождения"
-                      validators={[required, minLengthBirthday]}
-                      value={data.birthday}
-                      disabled={isServerProgress}
-                      onChange={handleChange('birthday')}
-                      validate={handleValidate('birthday')}
-                      mask={[
-                        /[0-3]/,
-                        /\d/,
-                        '.',
-                        /[0-1]/,
-                        /\d/,
-                        '.',
-                        /[1-2]/,
-                        /[09]/,
-                        /\d/,
-                        /\d/,
-                      ]}
-                    />
-                  </div>
+                  {isSwitch ? (
+                    <>
+                      <div className={styles.input}>
+                        <FormikField
+                          name="fullName"
+                          type="text"
+                          placeholder="ФИО"
+                          formik={formik}
+                          disabled={isServerProgress}
+                          mask={false}
+                        />
+                      </div>
+
+                      <div className={styles.input}>
+                        <FormikField
+                          name="birthday"
+                          type="text"
+                          placeholder="Дата рождения"
+                          formik={formik}
+                          disabled={isServerProgress}
+                          mask={[
+                            /[0-3]/,
+                            /\d/,
+                            '.',
+                            /[0-1]/,
+                            /\d/,
+                            '.',
+                            /[1-2]/,
+                            /[09]/,
+                            /\d/,
+                            /\d/,
+                          ]}
+                        />
+                      </div>
+                    </>
+                  ) : null}
                 </div>
 
                 <div>
-                  <div
-                    className={!isSwitch ? styles.input : styles.inputHidden}
-                  >
-                    <InputField
-                      type="text"
-                      placeholder="Название компании"
-                      validators={[required]}
-                      value={data.companyName}
-                      disabled={isServerProgress}
-                      onChange={handleChange('companyName')}
-                      validate={handleValidate('companyName')}
-                      mask={false}
-                    />
-                  </div>
+                  {!isSwitch ? (
+                    <>
+                      <div className={styles.input}>
+                        <FormikField
+                          name="companyName"
+                          type="text"
+                          placeholder="Название компании"
+                          formik={formik}
+                          disabled={isServerProgress}
+                          mask={false}
+                        />
+                      </div>
 
-                  <div
-                    className={!isSwitch ? styles.input : styles.inputHidden}
-                  >
-                    <InputField
-                      type="text"
-                      placeholder="Ваша должность"
-                      validators={[required]}
-                      value={data.position}
-                      disabled={isServerProgress}
-                      onChange={handleChange('position')}
-                      validate={handleValidate('position')}
-                      mask={false}
-                    />
-                  </div>
+                      <div className={styles.input}>
+                        <FormikField
+                          name="position"
+                          type="text"
+                          placeholder="Ваша должность"
+                          disabled={isServerProgress}
+                          formik={formik}
+                          mask={false}
+                        />
+                      </div>
+                    </>
+                  ) : null}
                   <div className={styles.input}>
-                    <InputField
+                    <FormikField
+                      name="phone"
                       type="text"
                       placeholder="Номер телефона"
-                      validators={[required, minLengthPhone]}
-                      value={data.phone}
+                      formik={formik}
                       disabled={isServerProgress}
-                      onChange={handleChange('phone')}
-                      validate={handleValidate('phone')}
                       mask={[
                         '+',
                         '7',
@@ -232,36 +187,38 @@ const Questionary = ({
                   <h2 className={commonStyles.h2}>Выберите дату мероприятия</h2>
                   <div className={styles.select}>
                     <Select
+                      name="selectEventDate"
                       eventsDate={eventsDate}
-                      selectEventDate={data.selectEventDate.label}
-                      onSelect={onSelect}
+                      formik={formik}
                       disabled={isServerProgress}
                     />
                   </div>
                   <div className={styles.checkboxBlock}>
-                    <Checkbox
+                    <FormikCheckbox
+                      name="parkingCheckbox"
                       label="Нужна парковка"
-                      checked={data.parkingCheckbox}
                       disabled={isServerProgress}
-                      onClick={onChecked('parkingCheckbox')}
+                      formik={formik}
                     />
-                    <Checkbox
+                    <FormikCheckbox
+                      name="handoutsCheckbox"
                       label="Хочу получить раздаточный материал"
+                      formik={formik}
                       disabled={isServerProgress}
-                      checked={data.handoutsCheckbox}
-                      onClick={onChecked('handoutsCheckbox')}
                     />
-                    <Checkbox
+                    <FormikCheckbox
+                      name="needHelpCheckbox"
                       label="Нужна помощь сопровождающего"
-                      checked={data.needHelpCheckbox}
+                      formik={formik}
                       disabled={isServerProgress}
-                      onClick={onChecked('needHelpCheckbox')}
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <Button disabled={isDisabledButton()}>Отправить заявку</Button>
+            <Button type="submit" disabled={isDisabledButton()}>
+              Отправить заявку
+            </Button>
           </form>
           {isComplete && <Redirect to="/result" />}
         </div>

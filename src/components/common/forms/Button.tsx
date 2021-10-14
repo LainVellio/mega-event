@@ -1,13 +1,12 @@
 import React from 'react';
 import styles from './Button.module.css';
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
-  name?: string;
-  disabled?: boolean;
-}
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {}
 
 const Button = ({
   onClick,
+  type = 'button',
   name,
   disabled,
   className,
@@ -16,6 +15,7 @@ const Button = ({
 }: ButtonProps) => {
   return (
     <button
+      type={type}
       name={name}
       onClick={onClick}
       disabled={disabled}
