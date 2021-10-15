@@ -49,7 +49,10 @@ export const initialResultForm: ResultForm = {
   parkingCheckbox: false,
   handoutsCheckbox: false,
   needHelpCheckbox: false,
-  switches: [{ name: '', isSwitch: false }],
+  switches: [
+    { name: 'Физ. лицо', isSwitch: true },
+    { name: 'Юр. лицо', isSwitch: false },
+  ],
 };
 
 const initialEventsDate: Array<EventDate> = [
@@ -102,19 +105,16 @@ const App = () => {
     try {
       setServerErrorMessage('');
       setIsServerProgress(true);
-      if (!token) {
-        const response = await api.auth(email, password);
-        saveToken(response.data.token);
-      }
-
+      const response = await api.auth(email, password);
+      saveToken(response.data.token);
       setIsAuth(true);
     } catch (error: any) {
-      if (error.response === undefined) {
+      if (error === undefined) {
         setIsServerProgress(false);
         setIsAuth(true);
         return;
       }
-      switch (error.response.status) {
+      switch (error.status) {
         case 400: {
           setServerErrorMessage('Неверный email или пароль');
           break;
@@ -123,9 +123,8 @@ const App = () => {
           setServerErrorMessage('Ошибка сервера');
           break;
         }
-
         default: {
-          setServerErrorMessage('Неизвестная ошибка');
+          setServerErrorMessage(error.message);
           break;
         }
       }
@@ -142,16 +141,16 @@ const App = () => {
     try {
       setListStatus(false);
       setIsServerProgress(true);
-      const response = await api.getList(token!);
+      const response = await api.getList();
       setEventsDate(response.data.eventsDate);
       setListStatus(true);
     } catch (error: any) {
-      if (error.response === undefined) {
+      if (error === undefined) {
         setListStatus(true);
         setIsServerProgress(false);
         return;
       }
-      switch (error.response.status) {
+      switch (error.status) {
         case 401: {
           saveToken('');
           setIsAuth(false);
@@ -165,7 +164,7 @@ const App = () => {
         default: {
           saveToken('');
           setIsAuth(false);
-          setServerErrorMessage('Неизвестная ошибка');
+          setServerErrorMessage(error.message);
           break;
         }
       }
@@ -206,18 +205,18 @@ const App = () => {
         : null;
 
       const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
-      await api.postForm(token!, form);
       setResultForm(data);
+      await api.postForm(form);
       setIsComplete(true);
     } catch (error: any) {
-      if (error.response === undefined) {
+      if (error === undefined) {
         setResultForm(data);
         setIsComplete(true);
         setIsServerProgress(false);
         setIsComplete(false);
         return;
       }
-      switch (error.response.status) {
+      switch (error.status) {
         case 401: {
           setServerErrorMessage('Ошибка авторизации');
           saveToken('');
@@ -280,6 +279,7 @@ const App = () => {
           path="/questionary"
           render={() => (
             <Questionary
+              resultForm={resultForm}
               isAuth={isAuth}
               eventsDate={eventsDate}
               isError500={isError500}

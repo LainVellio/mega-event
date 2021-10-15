@@ -35,7 +35,7 @@ const Authorization = ({
       login(values.email, values.password);
     },
   });
-  const isButtonDisabled = () => {
+  const setButtonDisabled = () => {
     if (isServerProgress) return true;
     return Object.values(formik.errors).some((i) => i);
   };
@@ -69,7 +69,7 @@ const Authorization = ({
             <div className={styles.serverError}>{serverErrorMessage}</div>
           </div>
         </div>
-        <Button type="submit" disabled={isButtonDisabled()}>
+        <Button type="submit" disabled={setButtonDisabled()}>
           Войти
         </Button>
         <div className={styles.mediaLinks}>

@@ -5,7 +5,12 @@ import Switch, { SwitchI } from '../common/forms/Switch';
 import { useState } from 'react';
 
 const Media = () => {
-  const [pages, setPages] = useState([{ name: '', isSwitch: true }]);
+  const [pages, setPages] = useState([
+    { name: 'Video', isSwitch: true },
+    { name: 'ReactPlayer', isSwitch: false },
+    { name: 'iframe', isSwitch: false },
+    { name: 'Audio', isSwitch: false },
+  ]);
   const onSwitch = (switches: Array<SwitchI>) => {
     setPages([...switches]);
   };
@@ -57,10 +62,7 @@ const Media = () => {
   };
   return (
     <div>
-      <Switch
-        names={['Video', 'ReactPlayer', 'iframe', 'Audio']}
-        setSwitch={onSwitch}
-      />
+      <Switch names={pages} setSwitch={onSwitch} />
       <Page />
     </div>
   );

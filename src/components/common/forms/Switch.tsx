@@ -3,7 +3,7 @@ import Button from './Button';
 import styles from './Switch.module.css';
 
 interface SwitchProps {
-  names: Array<string>;
+  names: SwitchI[];
   setSwitch: Function;
   isServerProgress?: boolean;
 }
@@ -18,11 +18,7 @@ const Switch = ({
   setSwitch,
   isServerProgress = false,
 }: SwitchProps) => {
-  const initialSwitches: Array<SwitchI> = names.map((name, i) =>
-    i === 0 ? { name, isSwitch: true } : { name, isSwitch: false },
-  );
-
-  const [switches, setSwitches] = useState(initialSwitches);
+  const [switches, setSwitches] = useState(names);
   useEffect(() => {
     setSwitch(switches);
   }, [switches]);

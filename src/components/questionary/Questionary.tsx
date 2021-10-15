@@ -2,19 +2,20 @@ import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { useFormik } from 'formik';
 
-import { EventDate, initialResultForm, ResultForm } from '../../App';
+import validate from './validate';
+import { EventDate, ResultForm } from '../../App';
 import Select from '../common/forms/Select';
 import Button from '../common/forms/Button';
 import Preloader from '../common/preloader/Preloader';
 import FormikField from '../common/forms/FormikField';
 import Switch, { SwitchI } from '../common/forms/Switch';
 import FormikCheckbox from '../common/forms/FormikCheckbox';
-import validate from './validate';
 
 import commonStyles from '../../App.module.css';
 import styles from './Questionary.module.css';
 
 interface QuestionaryProps {
+  resultForm: ResultForm;
   isAuth: boolean;
   eventsDate: Array<EventDate>;
   sendResultForm: Function;
@@ -27,6 +28,7 @@ interface QuestionaryProps {
 
 const Questionary = ({
   isAuth,
+  resultForm,
   eventsDate,
   sendResultForm,
   isError500,
@@ -36,7 +38,7 @@ const Questionary = ({
   isServerProgress,
 }: QuestionaryProps) => {
   const formik = useFormik({
-    initialValues: initialResultForm,
+    initialValues: resultForm,
     validationSchema: validate,
     onSubmit: (values: ResultForm) => {
       sendResultForm(values);
@@ -52,7 +54,7 @@ const Questionary = ({
     formik.setFieldValue('switches', switches);
   };
 
-  const isDisabledButton = () => {
+  const setDisabledButton = () => {
     if (isServerProgress || errors.phone || !formik.values.selectEventDate.id)
       return true;
     else
@@ -72,7 +74,7 @@ const Questionary = ({
           <h1 className={commonStyles.h1}>Заполните анкету участника</h1>
           <Switch
             setSwitch={onSwitch}
-            names={['Физ. Лицо', 'Юр. Лицо']}
+            names={formik.values.switches}
             isServerProgress={isServerProgress}
           />
           <form onSubmit={formik.handleSubmit}>
@@ -214,7 +216,7 @@ const Questionary = ({
                 </div>
               </div>
             </div>
-            <Button type="submit" disabled={isDisabledButton()}>
+            <Button type="submit" disabled={setDisabledButton()}>
               Отправить заявку
             </Button>
           </form>

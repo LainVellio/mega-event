@@ -1,38 +1,48 @@
 import { ResultForm } from './App';
 import axios from 'axios';
 
-const AUTH_URL = process.env.REACT_APP_AUTH_URL;
-const LIST_URL = process.env.REACT_APP_LIST_URL;
-const REQUEST_URL = process.env.REACT_APP_REQUEST_URL;
+const api = axios.create({
+  baseURL: process.env.REACT_APP_DOMAIN,
+  headers: { 'Content-Type': 'application/json' },
+});
+const requestSuccessInterceptor = (config: any) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+};
+const responseSuccessInterceptor = (response: any) => {
+  return { data: response.data };
+};
+const networkErrorInterceptor = (error: any) => {
+  console.log(error.response);
+  return Promise.reject(error.response);
+};
+
+api.interceptors.request.use(requestSuccessInterceptor);
+api.interceptors.response.use(
+  responseSuccessInterceptor,
+  networkErrorInterceptor,
+);
 
 const serverAPI = {
-  auth(email: string, password: string) {
-    return axios({
-      method: 'post',
-      url: AUTH_URL,
-      headers: { 'Content-Type': 'application/json' },
-      data: { username: email, password: password },
+  async auth(email: string, password: string) {
+    const response = await api.post('/auth', {
+      username: email,
+      password: password,
     });
+    return response;
   },
 
-  getList(token: string) {
-    return axios({
-      method: 'get',
-      url: LIST_URL,
-      headers: { Authorization: `Bearer ${token}` },
-    });
+  async getList() {
+    const response = await api.get('/list');
+    return response;
   },
 
-  postForm(token: string, form: ResultForm) {
-    return axios({
-      method: 'post',
-      url: REQUEST_URL,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      data: form,
-    });
+  async postForm(form: ResultForm) {
+    const response = await api.post('/request', form);
+    return response;
   },
 };
 
