@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import Moment from './components/moment/Moment';
@@ -36,7 +36,7 @@ export interface ResultForm {
   switches: Array<SwitchI>;
 }
 
-export const initialResultForm: ResultForm = {
+const initialResultForm: ResultForm = {
   fullName: '',
   birthday: '',
   companyName: '',
@@ -79,8 +79,8 @@ const initialEventsDate: Array<EventDate> = [
 ];
 
 const App = () => {
-  const [isAuth, setIsAuth] = useState(false);
   const [token, setToken] = useState(localStorage.getItem('token'));
+  const [isAuth, setIsAuth] = useState(!!token);
   const [isServerProgress, setIsServerProgress] = useState(false);
   const [resultForm, setResultForm] = useState(initialResultForm);
   const [eventsDate, setEventsDate] = useState(initialEventsDate);
@@ -88,18 +88,11 @@ const App = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [isListComplete, setListStatus] = useState(false);
   const [isError500, setError500] = useState(false);
+
   const saveToken = (token: string) => {
     localStorage.setItem('token', token);
     setToken(token);
   };
-
-  useEffect(() => {
-    if (token) {
-      setIsAuth(true);
-    } else {
-      setIsAuth(false);
-    }
-  }, []);
 
   const login = async (email: string, password: string) => {
     try {
@@ -203,7 +196,6 @@ const App = () => {
             opt3: 1,
           }
         : null;
-
       const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
       setResultForm(data);
       await api.postForm(form);
