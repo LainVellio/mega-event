@@ -39,15 +39,13 @@ const Questionary = ({
     initialValues: initialResultForm,
     validationSchema: validate,
     onSubmit: (values: ResultForm) => {
-      console.log('submit');
       sendResultForm(values);
     },
   });
-  console.log(validate);
   const isSwitch = formik.values.switches[0].isSwitch;
   const errors = formik.errors;
   useEffect(() => {
-    getListEventsDate();
+    isAuth && getListEventsDate();
   }, [isAuth]);
 
   const onSwitch = (switches: Array<SwitchI>) => {

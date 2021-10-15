@@ -4,7 +4,7 @@
   font-size: 53px;
   font-weight: 400;
   color: #ffffff;
-  padding: 38px 0 120px 0;
+  margin: 38px 0 70px 0;
 }
 
 .h1 {
@@ -24,6 +24,10 @@
   font-style: normal;
   font-weight: normal;
   margin-bottom: 16px 0;
+}
+
+.logoutButton {
+  margin-top: 50px;
 }
 
 @media only screen and (max-width: 750px) {

@@ -1,20 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Redirect } from 'react-router';
+import Moment from './components/moment/Moment';
+import ChartJS from './components/chartjs/chartjs';
 
+import api from './api';
 import Authorization from './components/authorization/Authorization';
 import Questionary from './components/questionary/Questionary';
 import FinalPage from './components/final/FinalPage';
 import Error500 from './components/error/Error500';
 import Media from './components/media/Media';
 import Animation from './components/animation/Animation';
+import { SwitchI } from './components/common/forms/Switch';
+import Events from './components/events/Events';
+import Button from './components/common/forms/Button';
+import Grid from './components/grid/Grid';
 
 import commonStyles from './App.module.css';
-import { SwitchI } from './components/common/forms/Switch';
-import Moment from './components/moment/Moment';
-import Events from './components/events/Events';
-import Grid from './components/grid/Grid';
-import ChartJS from './components/chartjs/chartjs';
 
 export interface EventDate {
   id: number;
@@ -75,7 +77,7 @@ const initialEventsDate: Array<EventDate> = [
 
 const App = () => {
   const [isAuth, setIsAuth] = useState(false);
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const [isServerProgress, setIsServerProgress] = useState(false);
   const [resultForm, setResultForm] = useState(initialResultForm);
   const [eventsDate, setEventsDate] = useState(initialEventsDate);
@@ -83,77 +85,95 @@ const App = () => {
   const [isComplete, setIsComplete] = useState(false);
   const [isListComplete, setListStatus] = useState(false);
   const [isError500, setError500] = useState(false);
+  const saveToken = (token: string) => {
+    localStorage.setItem('token', token);
+    setToken(token);
+  };
+
+  useEffect(() => {
+    if (token) {
+      setIsAuth(true);
+    } else {
+      setIsAuth(false);
+    }
+  }, []);
 
   const login = async (email: string, password: string) => {
-    // try {
-    //   setServerErrorMessage('');
-    //   setIsServerProgress(true);
-    //   const response = await api.auth(email, password);
-    //   setToken(response.data.token);
-    //   setIsAuth(true);
-    // } catch (error: any) {
-    //   if (error.response === undefined) {
-    setIsServerProgress(false);
-    setIsAuth(true);
-    return;
-    // }
-    //   switch (error.response.status) {
-    //     case 400: {
-    //       setServerErrorMessage('Неверный email или пароль');
-    //       break;
-    //     }
-    //     case 500: {
-    //       setServerErrorMessage('Ошибка сервера');
-    //       break;
-    //     }
+    try {
+      setServerErrorMessage('');
+      setIsServerProgress(true);
+      if (!token) {
+        const response = await api.auth(email, password);
+        saveToken(response.data.token);
+      }
 
-    //     default: {
-    //       setServerErrorMessage('Неизвестная ошибка');
-    //       break;
-    //     }
-    //   }
-    // }
-    // setIsServerProgress(false);
+      setIsAuth(true);
+    } catch (error: any) {
+      if (error.response === undefined) {
+        setIsServerProgress(false);
+        setIsAuth(true);
+        return;
+      }
+      switch (error.response.status) {
+        case 400: {
+          setServerErrorMessage('Неверный email или пароль');
+          break;
+        }
+        case 500: {
+          setServerErrorMessage('Ошибка сервера');
+          break;
+        }
+
+        default: {
+          setServerErrorMessage('Неизвестная ошибка');
+          break;
+        }
+      }
+    }
+    setIsServerProgress(false);
+  };
+
+  const logout = () => {
+    saveToken('');
+    setIsAuth(false);
   };
 
   const getListEventsDate = async () => {
-    // try {
-    //   setListStatus(false);
-    //   setIsServerProgress(true);
-    //   const response = await api.getList(token);
-    //   setEventsDate(response.data.eventsDate);
-    //   setListStatus(true);
-    // } catch (error: any) {
-    //   if (error.response === undefined) {
-    setListStatus(true);
-    setIsServerProgress(false);
-    return;
-    //   }
-    //   switch (error.response.status) {
-    //     case 401: {
-    //       setServerErrorMessage('Ошибка авторизации');
-    //       setToken('');
-    //       setIsAuth(false);
-    //       break;
-    //     }
-    //     case 500: {
-    //       setError500(true);
-    //       break;
-    //     }
+    try {
+      setListStatus(false);
+      setIsServerProgress(true);
+      const response = await api.getList(token!);
+      setEventsDate(response.data.eventsDate);
+      setListStatus(true);
+    } catch (error: any) {
+      if (error.response === undefined) {
+        setListStatus(true);
+        setIsServerProgress(false);
+        return;
+      }
+      switch (error.response.status) {
+        case 401: {
+          saveToken('');
+          setIsAuth(false);
+          break;
+        }
+        case 500: {
+          setError500(true);
+          break;
+        }
 
-    //     default: {
-    //       setToken('');
-    //       setIsAuth(false);
-    //       setServerErrorMessage('Неизвестная ошибка');
-    //       break;
-    //     }
-    //   }
-    // }
-    // setIsServerProgress(false);
+        default: {
+          saveToken('');
+          setIsAuth(false);
+          setServerErrorMessage('Неизвестная ошибка');
+          break;
+        }
+      }
+    }
+    setIsServerProgress(false);
   };
 
   const sendResultForm = async (data: ResultForm) => {
-    console.log('fasdfasdfasdf');
     try {
       setIsServerProgress(true);
       const commonData = {
@@ -186,8 +206,7 @@ const App = () => {
         : null;
 
       const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
-
-      //  await api.postForm(token, form);
+      await api.postForm(token!, form);
       setResultForm(data);
       setIsComplete(true);
     } catch (error: any) {
@@ -201,7 +220,7 @@ const App = () => {
       switch (error.response.status) {
         case 401: {
           setServerErrorMessage('Ошибка авторизации');
-          setToken('');
+          saveToken('');
           setIsAuth(false);
           break;
         }
@@ -211,7 +230,7 @@ const App = () => {
         }
 
         default: {
-          setToken('');
+          saveToken('');
           setIsAuth(false);
           setServerErrorMessage('Неизвестная ошибка');
           break;
@@ -227,7 +246,17 @@ const App = () => {
     <BrowserRouter>
       {isAuth ? <Redirect to="questionary" /> : <Redirect to="/login" />}
       <div>
-        <header className={commonStyles.header}>Codding Mega Event</header>
+        <header className={commonStyles.header}>
+          Codding Mega Event
+          {isAuth ? (
+            <Button
+              className={commonStyles.logoutButton}
+              onClick={() => logout()}
+            >
+              Разлогиниться
+            </Button>
+          ) : null}
+        </header>
         <Route
           exact
           path="/login"
