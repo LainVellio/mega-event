@@ -6,7 +6,7 @@ const api = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 const requestSuccessInterceptor = (config: any) => {
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -16,7 +16,6 @@ const responseSuccessInterceptor = (response: any) => {
   return { data: response.data };
 };
 const networkErrorInterceptor = (error: any) => {
-  console.log(error.response);
   return Promise.reject(error.response);
 };
 

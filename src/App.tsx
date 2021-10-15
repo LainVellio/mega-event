@@ -79,7 +79,7 @@ const initialEventsDate: Array<EventDate> = [
 ];
 
 const App = () => {
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(sessionStorage.getItem('token'));
   const [isAuth, setIsAuth] = useState(!!token);
   const [isServerProgress, setIsServerProgress] = useState(false);
   const [resultForm, setResultForm] = useState(initialResultForm);
@@ -90,7 +90,7 @@ const App = () => {
   const [isError500, setError500] = useState(false);
 
   const saveToken = (token: string) => {
-    localStorage.setItem('token', token);
+    sessionStorage.setItem('token', token);
     setToken(token);
   };
 
