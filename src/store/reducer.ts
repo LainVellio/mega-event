@@ -178,37 +178,37 @@ export const logout = () => (dispatch: any) => {
 
 export const getListEventsDate = () => async (dispatch: any) => {
   try {
-    setListStatus(false);
-    setIsServerProgress(true);
+    dispatch(setListStatus(false));
+    dispatch(setIsServerProgress(true));
     const response = await api.getList();
-    setEventsDate(response.data.eventsDate);
-    setListStatus(true);
+    dispatch(setEventsDate(response.data.eventsDate));
+    dispatch(setListStatus(true));
   } catch (error: any) {
     if (error === undefined) {
-      setListStatus(true);
-      setIsServerProgress(false);
+      dispatch(setListStatus(true));
+      dispatch(setIsServerProgress(false));
       return;
     }
     switch (error.status) {
       case 401: {
         saveToken('')(dispatch);
-        setIsAuth(false);
+        dispatch(setIsAuth(false));
         break;
       }
       case 500: {
-        setError500(true);
+        dispatch(setError500(true));
         break;
       }
 
       default: {
         saveToken('')(dispatch);
-        setIsAuth(false);
-        setServerErrorMessage(error.message);
+        dispatch(setIsAuth(false));
+        dispatch(setServerErrorMessage(error.message));
         break;
       }
     }
   }
-  setIsServerProgress(false);
+  dispatch(setIsServerProgress(false));
 };
 
 export const sendResultForm = (data: ResultForm) => async (dispatch: any) => {
