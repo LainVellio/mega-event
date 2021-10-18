@@ -1,5 +1,5 @@
-import { ResultForm } from './App';
 import axios from 'axios';
+import { ResultForm } from './store/reducer';
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_DOMAIN,

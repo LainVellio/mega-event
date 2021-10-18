@@ -9,6 +9,8 @@ import ButtonLink from '../common/forms/ButtonLink';
 
 import commonStyles from '../../App.module.css';
 import styles from './Authorization.module.css';
+import { connect } from 'react-redux';
+import { login } from '../../store/reducer';
 
 export interface ILoginData {
   email: string;
@@ -95,4 +97,10 @@ const Authorization = ({
   );
 };
 
-export default Authorization;
+const mapStateToProps = (state: any) => ({
+  isServerProgress: state.isServerProgress,
+  isAuth: state.isAuth,
+  serverErrorMessage: state.serverErrorMessage,
+});
+
+export default connect(mapStateToProps, { login })(Authorization);

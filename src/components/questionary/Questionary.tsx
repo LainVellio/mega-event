@@ -3,16 +3,22 @@ import { Redirect } from 'react-router';
 import { useFormik } from 'formik';
 
 import validate from './validate';
-import { EventDate, ResultForm } from '../../App';
 import Select from '../common/forms/Select';
 import Button from '../common/forms/Button';
 import Preloader from '../common/preloader/Preloader';
 import FormikField from '../common/forms/FormikField';
 import Switch, { SwitchI } from '../common/forms/Switch';
 import FormikCheckbox from '../common/forms/FormikCheckbox';
+import {
+  EventDate,
+  getListEventsDate,
+  ResultForm,
+  sendResultForm,
+} from '../../store/reducer';
 
 import commonStyles from '../../App.module.css';
 import styles from './Questionary.module.css';
+import { connect } from 'react-redux';
 
 interface QuestionaryProps {
   resultForm: ResultForm;
@@ -227,4 +233,16 @@ const Questionary = ({
   );
 };
 
-export default Questionary;
+const mapStateToProps = (state: any) => ({
+  isAuth: state.isAuth,
+  resultForm: state.resultForm,
+  eventsDate: state.eventsDate,
+  isError500: state.isError500,
+  isListComplete: state.isListComplete,
+  isComplete: state.isComplete,
+  isServerProgress: state.isServerProgress,
+});
+
+export default connect(mapStateToProps, { sendResultForm, getListEventsDate })(
+  Questionary,
+);

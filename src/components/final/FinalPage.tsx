@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 
 import Button from '../common/forms/Button';
-import commonStyles from '../../App.module.css';
+import { ResultForm } from '../../store/reducer';
+
 import styles from './FinalPage.module.css';
-import { ResultForm } from '../../App';
+import commonStyles from '../../App.module.css';
 
 interface FinalPageProps {
   resultForm: ResultForm;
@@ -83,4 +85,10 @@ const FinalPage = ({ resultForm, isAuth, isError500 }: FinalPageProps) => {
   );
 };
 
-export default FinalPage;
+const mapStateToProps = (state: any) => ({
+  resultForm: state.resultForm,
+  isAuth: state.isAuth,
+  isError500: state.isError500,
+});
+
+export default connect(mapStateToProps, {})(FinalPage);

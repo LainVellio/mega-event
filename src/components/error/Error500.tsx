@@ -1,5 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import { setError500 } from '../../store/reducer';
 
 import Button from '../common/forms/Button';
 
@@ -23,4 +25,8 @@ const Error500 = ({ setError500, isError500 }: Error500Props) => {
   );
 };
 
-export default Error500;
+const mapStateToProps = (state: any) => ({
+  isError500: state.isError500,
+});
+
+export default connect(mapStateToProps, { setError500 })(Error500);

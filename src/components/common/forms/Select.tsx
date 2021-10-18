@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import styles from './Select.module.css';
 import dropDown from '../../../assets/images/arrowDropDown.svg';
 import dropUp from '../../../assets/images/arrowDropUp.svg';
-import { EventDate } from '../../../App';
+import { EventDate } from '../../../store/reducer';
 
 interface SelectProps {
   name: string;
