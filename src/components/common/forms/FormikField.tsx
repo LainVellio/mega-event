@@ -1,28 +1,31 @@
 import React, { useRef, useState } from 'react';
+import { FormikProps } from 'formik';
+import MaskedInput from 'react-text-mask';
 
 import styles from './InputField.module.css';
 import eyeOpenDisabled from '../../../assets/images/eyeOpenDisabled.svg';
 import eyeOpenActive from '../../../assets/images/eyeOpenActive.svg';
 import eyeClosed from '../../../assets/images/eyeClosed.svg';
-import MaskedInput from 'react-text-mask';
 
-interface IFormikField extends React.InputHTMLAttributes<HTMLInputElement> {
-  formik: any;
+interface IFormikField<T>
+  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'name'> {
+  name: keyof T;
+  formik: FormikProps<T>;
   mask: Array<RegExp | string> | false;
 }
 
-const FormikField = ({
+const FormikField = <T,>({
   name,
   type,
   placeholder,
   disabled,
   formik,
   mask,
-}: IFormikField) => {
+}: IFormikField<T>) => {
   const { handleBlur, handleChange } = formik;
-  const value = formik.values[name!];
-  const isTouched = formik.touched[name!];
-  const error = formik.errors[name!];
+  const value = formik.values[name];
+  const isTouched = formik.touched[name];
+  const error = formik.errors[name];
 
   const [isFocused, setIsFocused] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -63,20 +66,20 @@ const FormikField = ({
           <label className={styles.label}>{placeholder}</label>
         )}
         <MaskedInput
+          name={typeof name === 'string' ? name : undefined}
+          value={typeof value === 'string' ? value : undefined}
           mask={mask}
-          name={name}
           className={
             styles.inputField +
               ' ' +
               ((value || isFocused) && styles.inputModified) || ''
           }
           placeholder={placeholder}
-          value={value}
           onChange={handleChange}
+          type={type === 'password' && isPasswordVisible ? 'text' : type}
           onFocus={onFocus}
           onBlur={onBlur}
           disabled={disabled}
-          type={type === 'password' && isPasswordVisible ? 'text' : type}
           ref={inputRef}
         />
 

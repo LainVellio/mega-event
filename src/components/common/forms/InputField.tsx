@@ -12,9 +12,9 @@ interface InputFieldProps {
   type: string;
   value: string;
   disabled: boolean;
-  validators: Array<Function>;
-  validate: Function;
   mask: Array<RegExp | string> | false;
+  validators: Array<Function>;
+  validate(hasError: boolean): void;
 }
 
 const InputField = ({

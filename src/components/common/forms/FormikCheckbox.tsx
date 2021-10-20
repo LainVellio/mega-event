@@ -1,16 +1,20 @@
 import React from 'react';
+import { FormikProps } from 'formik';
+
+import { ResultForm } from '../../../store/interfaces';
 
 import styles from './Checkbox.module.css';
 import stateOn from '../../../assets/images/checkboxOn.svg';
 import stateOff from '../../../assets/images/checkboxOff.svg';
 
 interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  name: keyof ResultForm;
   label: string;
-  formik: any;
+  formik: FormikProps<ResultForm>;
 }
 
 const FormikCheckbox = ({ name, label, disabled, formik }: CheckboxProps) => {
-  const checked = formik.values[name!];
+  const checked = formik.values[name];
   return (
     <div
       onClick={() => formik.setFieldValue(name, !checked)}

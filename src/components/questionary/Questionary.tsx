@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router';
 import { useFormik } from 'formik';
+import { connect } from 'react-redux';
 
 import validate from './validate';
 import Select from '../common/forms/Select';
@@ -9,27 +10,22 @@ import Preloader from '../common/preloader/Preloader';
 import FormikField from '../common/forms/FormikField';
 import Switch, { SwitchI } from '../common/forms/Switch';
 import FormikCheckbox from '../common/forms/FormikCheckbox';
-import {
-  EventDate,
-  getListEventsDate,
-  ResultForm,
-  sendResultForm,
-} from '../../store/reducer';
+import { getListEventsDate, sendResultForm } from '../../store/reducer';
+import { EventDate, InitialState, ResultForm } from '../../store/interfaces';
 
 import commonStyles from '../../App.module.css';
 import styles from './Questionary.module.css';
-import { connect } from 'react-redux';
 
 interface QuestionaryProps {
   resultForm: ResultForm;
   isAuth: boolean;
   eventsDate: Array<EventDate>;
-  sendResultForm: Function;
   isError500: boolean;
   isListComplete: boolean;
   isComplete: boolean;
-  getListEventsDate: Function;
   isServerProgress: boolean;
+  getListEventsDate(): void;
+  sendResultForm(values: ResultForm): void;
 }
 
 const Questionary = ({
@@ -92,7 +88,7 @@ const Questionary = ({
                   {isSwitch ? (
                     <>
                       <div className={styles.input}>
-                        <FormikField
+                        <FormikField<ResultForm>
                           name="fullName"
                           type="text"
                           placeholder="ФИО"
@@ -103,7 +99,7 @@ const Questionary = ({
                       </div>
 
                       <div className={styles.input}>
-                        <FormikField
+                        <FormikField<ResultForm>
                           name="birthday"
                           type="text"
                           placeholder="Дата рождения"
@@ -131,7 +127,7 @@ const Questionary = ({
                   {!isSwitch ? (
                     <>
                       <div className={styles.input}>
-                        <FormikField
+                        <FormikField<ResultForm>
                           name="companyName"
                           type="text"
                           placeholder="Название компании"
@@ -142,7 +138,7 @@ const Questionary = ({
                       </div>
 
                       <div className={styles.input}>
-                        <FormikField
+                        <FormikField<ResultForm>
                           name="position"
                           type="text"
                           placeholder="Ваша должность"
@@ -154,7 +150,7 @@ const Questionary = ({
                     </>
                   ) : null}
                   <div className={styles.input}>
-                    <FormikField
+                    <FormikField<ResultForm>
                       name="phone"
                       type="text"
                       placeholder="Номер телефона"
@@ -233,7 +229,7 @@ const Questionary = ({
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: InitialState) => ({
   isAuth: state.isAuth,
   resultForm: state.resultForm,
   eventsDate: state.eventsDate,

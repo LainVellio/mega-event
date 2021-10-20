@@ -1,4 +1,5 @@
 import React from 'react';
+
 import cl from './Preloader.module.css';
 
 const Preloader = () => (

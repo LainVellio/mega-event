@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { setError500 } from '../../store/reducer';
 
+import { setError500 } from '../../store/action-creators';
+import { InitialState } from '../../store/interfaces';
 import Button from '../common/forms/Button';
 
 import styles from './Error500.module.css';
 
 interface Error500Props {
-  setError500: Function;
   isError500: boolean;
+  setError500(isError500: boolean): void;
 }
 
 const Error500 = ({ setError500, isError500 }: Error500Props) => {
@@ -25,7 +26,7 @@ const Error500 = ({ setError500, isError500 }: Error500Props) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: InitialState) => ({
   isError500: state.isError500,
 });
 

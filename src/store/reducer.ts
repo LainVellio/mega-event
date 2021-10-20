@@ -1,35 +1,30 @@
+import { Dispatch } from 'redux';
+
 import api from '../api';
-import { SwitchI } from '../components/common/forms/Switch';
+import * as actions from './action-creators';
+import { InitialState, ResultForm } from './interfaces';
 
-const SET_RESULT_FORM = 'SET_RESULT_FORM';
-const SET_EVENTS_DATE = 'SET_EVENTS_DATE';
-const SET_TOKEN = 'SET_TOKEN';
-const SET_IS_AUTH = 'SET_IS_AUTH';
-const SET_IS_SERVER_PROGRESS = 'SET_IS_SERVER_PROGRESS';
-const SET_SERVER_ERROR_MESSAGE = 'SET_SERVER_ERROR_MESSAGE';
-const SET_IS_COMPLETE = 'SET_IS_COMPLETE';
-const SET_LIST_STATUS = 'SET_LIST_STATUS';
-const SET_ERROR_500 = 'SET_ERROR_500';
-
-export interface EventDate {
-  id: number;
-  label: string;
+export enum ActionTypes {
+  SET_RESULT_FORM = 'SET_RESULT_FORM',
+  SET_EVENTS_DATE = 'SET_EVENTS_DATE',
+  SET_TOKEN = 'SET_TOKEN',
+  SET_IS_AUTH = 'SET_IS_AUTH',
+  SET_IS_SERVER_PROGRESS = 'SET_IS_SERVER_PROGRESS',
+  SET_SERVER_ERROR_MESSAGE = 'SET_SERVER_ERROR_MESSAGE',
+  SET_IS_COMPLETE = 'SET_IS_COMPLETE',
+  SET_LIST_STATUS = 'SET_LIST_STATUS',
+  SET_ERROR_500 = 'SET_ERROR_500',
 }
 
-export interface ResultForm {
-  fullName: string;
-  birthday: string;
-  companyName: string;
-  position: string;
-  phone: string;
-  selectEventDate: EventDate;
-  parkingCheckbox: boolean;
-  handoutsCheckbox: boolean;
-  needHelpCheckbox: boolean;
-  switches: Array<SwitchI>;
+type InferValueTypes<T> = T extends { [key: string]: infer U } ? U : never;
+type TAction = ReturnType<InferValueTypes<typeof actions>>;
+
+export enum QuestionarySwitchesName {
+  individual = 'Физ. лицо',
+  entity = 'Юр. лицо',
 }
 
-const initialState = {
+const initialState: InitialState = {
   resultForm: {
     fullName: '',
     birthday: '',
@@ -44,8 +39,8 @@ const initialState = {
     handoutsCheckbox: false,
     needHelpCheckbox: false,
     switches: [
-      { name: 'Физ. лицо', isSwitch: true },
-      { name: 'Юр. лицо', isSwitch: false },
+      { name: QuestionarySwitchesName.individual, isSwitch: true },
+      { name: QuestionarySwitchesName.entity, isSwitch: false },
     ],
   },
   eventsDate: [
@@ -79,141 +74,114 @@ const initialState = {
   isError500: false,
 };
 
-const reducer = (state = initialState, action: any) => {
+const reducer = (state = initialState, action: TAction): InitialState => {
   switch (action.type) {
-    case SET_RESULT_FORM:
-    case SET_EVENTS_DATE:
-    case SET_TOKEN:
-    case SET_IS_AUTH:
-    case SET_IS_SERVER_PROGRESS:
-    case SET_SERVER_ERROR_MESSAGE:
-    case SET_IS_COMPLETE:
-    case SET_LIST_STATUS:
-    case SET_ERROR_500:
-      return { ...state, ...action.payload };
+    case ActionTypes.SET_TOKEN:
+      return { ...state, token: action.token };
+    case ActionTypes.SET_RESULT_FORM:
+      return { ...state, resultForm: action.resultForm };
+    case ActionTypes.SET_EVENTS_DATE:
+      return { ...state, eventsDate: action.eventsDate };
+    case ActionTypes.SET_IS_AUTH:
+      return { ...state, isAuth: action.isAuth };
+    case ActionTypes.SET_IS_SERVER_PROGRESS:
+      return { ...state, isServerProgress: action.isServerProgress };
+    case ActionTypes.SET_SERVER_ERROR_MESSAGE:
+      return { ...state, serverErrorMessage: action.serverErrorMessage };
+    case ActionTypes.SET_IS_COMPLETE:
+      return { ...state, isComplete: action.isComplete };
+    case ActionTypes.SET_LIST_STATUS:
+      return { ...state, isListComplete: action.isListComplete };
+    case ActionTypes.SET_ERROR_500:
+      return { ...state, isError500: action.isError500 };
     default:
       return state;
   }
 };
 
-export const setResultForm = (resultForm: ResultForm) => ({
-  type: SET_RESULT_FORM,
-  payload: { resultForm },
-});
-export const setEventsDate = (eventsDate: EventDate) => ({
-  type: SET_EVENTS_DATE,
-  payload: { eventsDate },
-});
-export const setToken = (token: string) => ({
-  type: SET_TOKEN,
-  payload: { token },
-});
-export const setIsAuth = (isAuth: boolean) => ({
-  type: SET_IS_AUTH,
-  payload: { isAuth },
-});
-export const setIsServerProgress = (isServerProgress: boolean) => ({
-  type: SET_IS_SERVER_PROGRESS,
-  payload: { isServerProgress },
-});
-export const setServerErrorMessage = (serverErrorMessage: string) => ({
-  type: SET_SERVER_ERROR_MESSAGE,
-  payload: { serverErrorMessage },
-});
-export const setIsComplete = (isComplete: boolean) => ({
-  type: SET_IS_COMPLETE,
-  payload: { isComplete },
-});
-export const setListStatus = (isListComplete: boolean) => ({
-  type: SET_LIST_STATUS,
-  payload: { isListComplete },
-});
-export const setError500 = (isError500: boolean) => ({
-  type: SET_ERROR_500,
-  payload: { isError500 },
-});
-
-const saveToken = (token: string) => (dispatch: any) => {
+const saveToken = (token: string) => (dispatch: Dispatch<TAction>) => {
   sessionStorage.setItem('token', token);
-  dispatch(setToken(token));
+  dispatch(actions.setToken(token));
 };
 
 export const login = (email: string, password: string) => async (
-  dispatch: any,
+  dispatch: Dispatch<TAction>,
 ) => {
   try {
-    dispatch(setServerErrorMessage(''));
-    dispatch(setIsServerProgress(true));
+    dispatch(actions.setServerErrorMessage(''));
+    dispatch(actions.setIsServerProgress(true));
     const response = await api.auth(email, password);
     saveToken(response.data.token)(dispatch);
-    dispatch(setIsAuth(true));
+    dispatch(actions.setIsAuth(true));
   } catch (error: any) {
     if (error === undefined) {
-      dispatch(setIsServerProgress(false));
-      dispatch(setIsAuth(true));
+      dispatch(actions.setIsServerProgress(false));
+      dispatch(actions.setIsAuth(true));
       return;
     }
     switch (error.status) {
       case 400: {
-        dispatch(setServerErrorMessage('Неверный email или пароль'));
+        dispatch(actions.setServerErrorMessage('Неверный email или пароль'));
         break;
       }
       case 500: {
-        dispatch(setServerErrorMessage('Ошибка сервера'));
+        dispatch(actions.setServerErrorMessage('Ошибка сервера'));
         break;
       }
       default: {
-        dispatch(setServerErrorMessage(error.message));
+        dispatch(actions.setServerErrorMessage(error.message));
         break;
       }
     }
   }
-  dispatch(setIsServerProgress(false));
+  dispatch(actions.setIsServerProgress(false));
 };
 
-export const logout = () => (dispatch: any) => {
+export const logout = () => (dispatch: Dispatch<TAction>) => {
   saveToken('')(dispatch);
-  dispatch(setIsAuth(false));
+  dispatch(actions.setIsAuth(false));
 };
 
-export const getListEventsDate = () => async (dispatch: any) => {
+export const getListEventsDate = () => async (dispatch: Dispatch<TAction>) => {
   try {
-    dispatch(setListStatus(false));
-    dispatch(setIsServerProgress(true));
+    dispatch(actions.setListStatus(false));
+    dispatch(actions.setIsServerProgress(true));
     const response = await api.getList();
-    dispatch(setEventsDate(response.data.eventsDate));
-    dispatch(setListStatus(true));
+    dispatch(actions.setEventsDate(response.data.eventsDate));
+    dispatch(actions.setListStatus(true));
   } catch (error: any) {
     if (error === undefined) {
-      dispatch(setListStatus(true));
-      dispatch(setIsServerProgress(false));
+      dispatch(actions.setListStatus(true));
+      dispatch(actions.setIsServerProgress(false));
       return;
     }
     switch (error.status) {
       case 401: {
         saveToken('')(dispatch);
-        dispatch(setIsAuth(false));
+        dispatch(actions.setIsAuth(false));
         break;
       }
       case 500: {
-        dispatch(setError500(true));
+        dispatch(actions.setError500(true));
         break;
       }
 
       default: {
         saveToken('')(dispatch);
-        dispatch(setIsAuth(false));
-        dispatch(setServerErrorMessage(error.message));
+        dispatch(actions.setIsAuth(false));
+        dispatch(actions.setServerErrorMessage(error.message));
         break;
       }
     }
   }
-  dispatch(setIsServerProgress(false));
+  dispatch(actions.setIsServerProgress(false));
 };
 
-export const sendResultForm = (data: ResultForm) => async (dispatch: any) => {
+export const sendResultForm = (data: ResultForm) => async (
+  dispatch: Dispatch<TAction>,
+) => {
   try {
-    dispatch(setIsServerProgress(true));
+    dispatch(actions.setIsServerProgress(true));
     const commonData = {
       phone: data.phone,
       eventId: data.selectEventDate.id,
@@ -243,40 +211,40 @@ export const sendResultForm = (data: ResultForm) => async (dispatch: any) => {
         }
       : null;
     const form = Object.assign(commonData, specialData, opt1, opt2, opt3);
-    dispatch(setResultForm(data));
+    dispatch(actions.setResultForm(data));
     await api.postForm(form);
-    dispatch(setIsComplete(true));
+    dispatch(actions.setIsComplete(true));
   } catch (error: any) {
     if (error === undefined) {
-      dispatch(setResultForm(data));
-      dispatch(setIsComplete(true));
-      dispatch(setIsServerProgress(false));
-      dispatch(setIsComplete(false));
+      dispatch(actions.setResultForm(data));
+      dispatch(actions.setIsComplete(true));
+      dispatch(actions.setIsServerProgress(false));
+      dispatch(actions.setIsComplete(false));
       return;
     }
     switch (error.status) {
       case 401: {
-        dispatch(setServerErrorMessage('Ошибка авторизации'));
+        dispatch(actions.setServerErrorMessage('Ошибка авторизации'));
         saveToken('')(dispatch);
-        dispatch(setIsAuth(false));
+        dispatch(actions.setIsAuth(false));
         break;
       }
       case 500: {
-        dispatch(setError500(true));
+        dispatch(actions.setError500(true));
         break;
       }
 
       default: {
         saveToken('')(dispatch);
-        dispatch(setIsAuth(false));
-        dispatch(setServerErrorMessage('Неизвестная ошибка'));
+        dispatch(actions.setIsAuth(false));
+        dispatch(actions.setServerErrorMessage('Неизвестная ошибка'));
         break;
       }
     }
   }
-  dispatch(setIsComplete(false));
-  dispatch(setIsServerProgress(false));
-  dispatch(setListStatus(false));
+  dispatch(actions.setIsComplete(false));
+  dispatch(actions.setIsServerProgress(false));
+  dispatch(actions.setListStatus(false));
 };
 
 export default reducer;

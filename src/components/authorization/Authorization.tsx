@@ -1,16 +1,17 @@
 import React from 'react';
 import { Redirect } from 'react-router';
 import { useFormik } from 'formik';
+import { connect } from 'react-redux';
 
 import validate from './validate';
 import FormikField from '../common/forms/FormikField';
 import Button from '../common/forms/Button';
 import ButtonLink from '../common/forms/ButtonLink';
+import { login } from '../../store/reducer';
+import { InitialState } from '../../store/interfaces';
 
 import commonStyles from '../../App.module.css';
 import styles from './Authorization.module.css';
-import { connect } from 'react-redux';
-import { login } from '../../store/reducer';
 
 export interface ILoginData {
   email: string;
@@ -18,10 +19,10 @@ export interface ILoginData {
 }
 
 interface AuthorizationProps {
-  login: Function;
   isServerProgress: boolean;
   isAuth: boolean;
   serverErrorMessage: string;
+  login(email: string, password: string): void;
 }
 
 const Authorization = ({
@@ -49,7 +50,7 @@ const Authorization = ({
       <form onSubmit={formik.handleSubmit} className={styles.form}>
         <div className={styles.inputBlock}>
           <div className={styles.email}>
-            <FormikField
+            <FormikField<ILoginData>
               name="email"
               type="text"
               placeholder="E-mail"
@@ -60,7 +61,7 @@ const Authorization = ({
           </div>
 
           <div>
-            <FormikField
+            <FormikField<ILoginData>
               name="password"
               type="password"
               placeholder="Пароль"
@@ -97,7 +98,7 @@ const Authorization = ({
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: InitialState) => ({
   isServerProgress: state.isServerProgress,
   isAuth: state.isAuth,
   serverErrorMessage: state.serverErrorMessage,

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 
 import Button from '../common/forms/Button';
-import { ResultForm } from '../../store/reducer';
+import { InitialState, ResultForm } from '../../store/interfaces';
 
 import styles from './FinalPage.module.css';
 import commonStyles from '../../App.module.css';
@@ -85,7 +85,7 @@ const FinalPage = ({ resultForm, isAuth, isError500 }: FinalPageProps) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: InitialState) => ({
   resultForm: state.resultForm,
   isAuth: state.isAuth,
   isError500: state.isError500,

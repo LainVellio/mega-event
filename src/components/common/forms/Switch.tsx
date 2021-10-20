@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+
 import Button from './Button';
+
 import styles from './Switch.module.css';
 
 interface SwitchProps {
   names: SwitchI[];
-  setSwitch: Function;
+  setSwitch(switches: SwitchI[]): void;
   isServerProgress?: boolean;
 }
 

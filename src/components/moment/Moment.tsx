@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from 'moment';
-import styles from './Moment.module.css';
 import 'moment/locale/ru';
+
+import styles from './Moment.module.css';
 
 const Moment = () => {
   moment.locale('ru');

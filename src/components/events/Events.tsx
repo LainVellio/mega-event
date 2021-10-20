@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+
 import Button from '../common/forms/Button';
 
 const Events = () => {
@@ -9,12 +10,12 @@ const Events = () => {
     eventMessages.push(message);
   };
 
-  const onContextMenu = (e: any) => {
+  const onContextMenu = () => {
     addMessage(`открыто контекстное меню над элементом`);
     setMessages(eventMessages);
   };
 
-  const onFocus = (e: any) => {
+  const onFocus = (e: React.FocusEvent) => {
     console.log('focus');
     if (e.target.id) {
       addMessage(
@@ -56,7 +57,7 @@ const Events = () => {
           border: 'solid 1px white',
         }}
         tabIndex={1}
-        onContextMenu={(e) => onContextMenu(e)}
+        onContextMenu={(e) => onContextMenu()}
         onFocus={(e) => onFocus(e)}
         onBlur={(e) => onBlur(e)}
       >

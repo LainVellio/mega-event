@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
+import { FormikProps } from 'formik';
 
 import styles from './Select.module.css';
 import dropDown from '../../../assets/images/arrowDropDown.svg';
 import dropUp from '../../../assets/images/arrowDropUp.svg';
-import { EventDate } from '../../../store/reducer';
+import { EventDate, ResultForm } from '../../../store/interfaces';
+
+type SelectNames = 'selectEventDate';
 
 interface SelectProps {
-  name: string;
+  name: SelectNames;
   eventsDate: Array<EventDate>;
-  formik: any;
+  formik: FormikProps<ResultForm>;
   disabled: boolean;
 }
 
 const Select = ({ name, formik, eventsDate, disabled }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const selectEventDate = formik.values[name!];
+  const selectEventDate = formik.values[name];
 
   const onClickMain = () => {
     setIsOpen(!isOpen);

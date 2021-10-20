@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+
 import { SwitchI } from '../common/forms/Switch';
 
 const REQUIRED = 'Поле обязательно для заполнения';

@@ -1,6 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
+
 import Chart from 'chart.js/auto';
 import moment from 'moment';
+
 import './chart.css';
 
 // Data generation

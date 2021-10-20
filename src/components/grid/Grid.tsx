@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import styles from './Grid.module.css';
-import InputField from '../common/forms/InputField';
 import styled from 'styled-components';
+
+import InputField from '../common/forms/InputField';
+
+import styles from './Grid.module.css';
 
 const Container = styled.div<{
   rowCount: number;

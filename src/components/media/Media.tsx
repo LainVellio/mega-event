@@ -1,8 +1,9 @@
-import React from 'react';
-import styles from './Media.module.css';
+import React, { useState } from 'react';
 import ReactPlayer from 'react-player';
+
 import Switch, { SwitchI } from '../common/forms/Switch';
-import { useState } from 'react';
+
+import styles from './Media.module.css';
 
 const Media = () => {
   const [pages, setPages] = useState([

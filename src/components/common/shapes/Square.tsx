@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
 import { TransformCheckbox } from '../../animation/Animation';
+
 import styles from './Square.module.css';
 
 export interface ISquareProps {
   isTransform: boolean;
   isTransforms: TransformCheckbox;
-  setIsTransform: Function;
+  setIsTransform(isTransform: boolean): void;
 }
 
 const Square = ({
